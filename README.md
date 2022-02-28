@@ -1,7 +1,15 @@
 ## Architecture
 
 Strict abstraction barriers between each domain (Graph, GameObjects, Geometry, ...)
+
 See [Structure And Interpretation Of Computer Programs, Abstraction Barriers](https://mitpress.mit.edu/sites/default/files/sicp/full-text/book/book-Z-H-14.html#%_sec_2.1.2)
+
+
+Here are some ideas for how the game architecture works (that's not a complete architecture, just the patterns being used)
+
+![](https://github.com/SolbiatiAlessandro/hacktorio/blob/master/imgs/architecture.png?raw=true)
+
+Here is some pseudocode to lay down these ideas
 
 ```
 **main scene**
