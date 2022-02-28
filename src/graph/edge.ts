@@ -1,4 +1,4 @@
-import {GameObjectOnGraph, GeometryOnGraph} from '../graph/graph.interface'
+import {GameObjectOnGraph, GeometryOnGraph} from '../interfaces/graph.interface'
 
 export class Edge{
 	constructor(
