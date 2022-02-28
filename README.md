@@ -167,6 +167,7 @@ CurveForTest extend Curve
 3. Abandon your branch, check out master
 4. Rewrite everything in small file <100 lines, functional, typed, and tested
 5. Make small commits of every change.
+6. Optional: pack all commits for a given feature in a PR so that when we ask "how does that feature work?" we just look at the PR
 
 ```
 yarn dev
