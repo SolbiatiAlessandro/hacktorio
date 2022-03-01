@@ -10,6 +10,9 @@ import { NodeGeometries } from "../builders/node-builder";
 
 import { GameObjectOnGraph } from "../interfaces/graph.interface";
 
+import { Handle } from "../gameobjects/controller/handle"
+import { Line } from "../gameobjects/controller/line"
+
 export class Controller
   extends Phaser.GameObjects.Group
   implements GameObjectOnGraph
@@ -17,9 +20,9 @@ export class Controller
   _graphParentElement: Node;
 
   controllerCenter: Phaser.GameObjects.Sprite;
-  rightHandle: Phaser.GameObjects.Sprite;
-  leftHandle: Phaser.GameObjects.Sprite;
-  line: Phaser.GameObjects.Line;
+  rightHandle: Handle;
+  leftHandle: Handle;
+  line: Line;
 
   depth: number = 3;
 
@@ -52,34 +55,17 @@ export class Controller
   }
 
   populate() {
-    this.rightHandle = this.create(
-      ...this.pointRight().vector(),
-      "controlPoint"
-    );
-    this.leftHandle = this.create(...this.pointLeft().vector(), "controlPoint");
-    this.createLine();
+    this.rightHandle = new Handle(this.scene, this.pointRight());
+		this.add(this.rightHandle, true);
+    this.leftHandle = new Handle(this.scene, this.pointLeft());
+		this.add(this.leftHandle, true);
+		this.line = new Line(this.scene, this.leftHandle, this.rightHandle);
+		this.add(this.line, true);
     this.controllerCenter = this.create(
       ...this.pointCenter().vector(),
       "controlPointCenter"
     );
     this.setDepth(this.depth);
-  }
-
-  createLine() {
-    this.line = new Phaser.GameObjects.Line(
-      this.scene,
-      0,
-      0,
-      this.leftHandle.x,
-      this.leftHandle.y,
-      this.rightHandle.x,
-      this.rightHandle.y,
-      Constants.PRIMARY_COLOR,
-      0.8
-    );
-    this.line.setOrigin(0, 0);
-    this.scene.add.existing(this.line);
-    this.add(this.line);
   }
 
   update() {}
