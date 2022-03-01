@@ -5,16 +5,26 @@ import { CurveForRender } from "../geometry/curve";
 import { Constants } from "../constants";
 import { GameObject } from "../gameobjects/gameobject";
 
-class Railway extends GameObject implements GameObjectOnGraph {
-  image: string = "no-image";
-  tint: number = Constants.PRIMARY_COLOR;
-  depth: number = 0;
-  rails: Array<Phaser.GameObjects.Sprite> = [];
-
+class GameObjectWithRailwayGeometries
+  extends GameObject
+  implements GameObjectOnGraph
+{
   _curve(): CurveForRender {
     // @ts-ignore
     return this.graphParentElement.geometries[EdgeGeometries.CURVE__RENDER];
   }
+
+  update() {}
+}
+
+class Railway
+  extends GameObjectWithRailwayGeometries
+  implements GameObjectOnGraph
+{
+  image: string = "no-image";
+  tint: number = Constants.PRIMARY_COLOR;
+  depth: number = 0;
+  rails: Array<Phaser.GameObjects.Sprite> = [];
 
   populate() {
     this._curve()

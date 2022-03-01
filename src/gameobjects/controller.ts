@@ -15,7 +15,36 @@ import { GameObject } from "../gameobjects/gameobject";
 import { Handle } from "../gameobjects/controller/handle";
 import { Line } from "../gameobjects/controller/line";
 
-export class Controller extends GameObject implements GameObjectOnGraph {
+class GameObjectWithControllerGeometries
+  extends GameObject
+  implements GameObjectOnGraph
+{
+  get pointCenter(): Point {
+    //@ts-ignore
+    return this.graphParentElement.geometries[NodeGeometries.POINT__CENTER];
+  }
+
+  get pointLeft(): Point {
+    //@ts-ignore
+    return this.graphParentElement.geometries[
+      NodeGeometries.POINT__LEFT_HANDLE
+    ];
+  }
+
+  get pointRight(): Point {
+    //@ts-ignore
+    return this.graphParentElement.geometries[
+      NodeGeometries.POINT__RIGHT_HANDLE
+    ];
+  }
+
+  update() {}
+}
+
+export class Controller
+  extends GameObjectWithControllerGeometries
+  implements GameObjectOnGraph
+{
   controllerCenter: Phaser.GameObjects.Sprite;
   rightHandle: Handle;
   leftHandle: Handle;
@@ -23,35 +52,16 @@ export class Controller extends GameObject implements GameObjectOnGraph {
 
   depth: number = 3;
 
-  pointCenter(): Point {
-    //@ts-ignore
-    return this.graphParentElement.geometries[NodeGeometries.POINT__CENTER];
-  }
-
-  pointLeft(): Point {
-    //@ts-ignore
-    return this.graphParentElement.geometries[
-      NodeGeometries.POINT__LEFT_HANDLE
-    ];
-  }
-
-  pointRight(): Point {
-    //@ts-ignore
-    return this.graphParentElement.geometries[
-      NodeGeometries.POINT__RIGHT_HANDLE
-    ];
-  }
-
   populateHandles() {
     this.rightHandle = new Handle(
       this.scene,
-      this.pointRight(),
+      this.pointRight,
       this.onDrag("rightHandle")
     );
     this.add(this.rightHandle, true);
     this.leftHandle = new Handle(
       this.scene,
-      this.pointLeft(),
+      this.pointLeft,
       this.onDrag("leftHandle")
     );
     this.add(this.leftHandle, true);
@@ -62,7 +72,7 @@ export class Controller extends GameObject implements GameObjectOnGraph {
     this.line = new Line(this.scene, this.leftHandle, this.rightHandle);
     this.add(this.line, true);
     this.controllerCenter = this.create(
-      ...this.pointCenter().vector(),
+      ...this.pointCenter.vector(),
       "controlPointCenter"
     );
     this.setDepth(this.depth);
