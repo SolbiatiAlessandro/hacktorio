@@ -53,7 +53,9 @@ export class EdgeBuilder {
   buildGameObjects(): Record<string, GameObjectOnGraph> {
     const gameObjects: Record<string, GameObjectOnGraph> = {};
     gameObjects[EdgeGameObjects.RAILWAY__TOP] = new TopRailway(this.scene);
-    gameObjects[EdgeGameObjects.RAILWAY__BOTTOM] = new BottomRailway(this.scene);
+    gameObjects[EdgeGameObjects.RAILWAY__BOTTOM] = new BottomRailway(
+      this.scene
+    );
     return gameObjects;
   }
 

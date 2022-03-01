@@ -5,10 +5,7 @@ import { CurveForRender } from "../geometry/curve";
 import { Constants } from "../constants";
 import { GameObject } from "../gameobjects/gameobject";
 
-class Railway
-  extends GameObject
-  implements GameObjectOnGraph
-{
+class Railway extends GameObject implements GameObjectOnGraph {
   image: string = "no-image";
   tint: number = Constants.PRIMARY_COLOR;
   depth: number = 0;
@@ -51,17 +48,12 @@ class Railway
   }
 }
 
-
-export class TopRailway 
-	extends Railway 
-{
+export class TopRailway extends Railway {
   image: string = "rail-top";
   depth: number = 2;
 }
 
-export class BottomRailway 
-  extends Railway 
-{
+export class BottomRailway extends Railway {
   image: string = "rail-bottom";
   depth: number = 1;
   tint: number = Constants.randomColor();
