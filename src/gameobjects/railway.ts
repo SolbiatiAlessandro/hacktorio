@@ -17,10 +17,12 @@ class GameObjectWithRailwayGeometries
   update() {}
 }
 
-function rotateRail(rail: Phaser.GameObjects.Sprite, tangent: Phaser.Math.Vector2){
-	rail.rotation =
-		Phaser.Math.Angle.Between(0, 0, tangent.x, tangent.y) +
-		Phaser.Math.PI2 / 4;
+function rotateRail(
+  rail: Phaser.GameObjects.Sprite,
+  tangent: Phaser.Math.Vector2
+) {
+  rail.rotation =
+    Phaser.Math.Angle.Between(0, 0, tangent.x, tangent.y) + Phaser.Math.PI2 / 4;
 }
 
 class Railway
@@ -38,7 +40,7 @@ class Railway
       .forEach(([point, tangent], index) => {
         const rail = this.getFirstDead(true, point.x, point.y, this.image);
         rail.setTint(this.tint);
-				rotateRail(rail, tangent);
+        rotateRail(rail, tangent);
 
         rail.displayHeight = 32;
         rail.displayWidth = 64;
@@ -53,7 +55,7 @@ class Railway
       .forEach(([point, tangent], index) => {
         const rail = this.rails[index];
         rail.setPosition(point.x, point.y);
-				rotateRail(rail, tangent);
+        rotateRail(rail, tangent);
       });
     this.setDepth(this.depth);
   }
