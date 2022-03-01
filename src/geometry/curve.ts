@@ -1,6 +1,6 @@
 import { Point } from "../geometry/point";
 
-export class Curve extends Phaser.Curves.CubicBezier {
+abstract class Curve extends Phaser.Curves.CubicBezier {
   graphParentElement: any;
 
   segments: number;

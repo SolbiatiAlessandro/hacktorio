@@ -4,7 +4,10 @@ import { GeometryEdge } from "../builders/edge-builder";
 import { CurveForRender } from "../geometry/curve";
 import { Constants } from "../constants";
 
-class Railway extends Phaser.GameObjects.Group implements GameObjectOnGraph {
+abstract class Railway
+  extends Phaser.GameObjects.Group
+  implements GameObjectOnGraph
+{
   image: string = "no-image";
   tint: number = Constants.PRIMARY_COLOR;
   depth: number = 0;

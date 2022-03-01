@@ -50,10 +50,7 @@ export class EdgeBuilder {
     return geometries;
   }
 
-  buildGameObjects(
-    firstNode: Node,
-    secondNode: Node
-  ): Record<string, GameObjectOnGraph> {
+  buildGameObjects(): Record<string, GameObjectOnGraph> {
     const gameObjects: Record<string, GameObjectOnGraph> = {};
     gameObjects[GameObjectEdge.RAILWAY__TOP] = new TopRailway(this.scene);
     gameObjects[GameObjectEdge.RAILWAY__BOTTOM] = new BottomRailway(this.scene);
@@ -61,7 +58,7 @@ export class EdgeBuilder {
   }
 
   build(firstNode: Node, secondNode: Node) {
-    const gameObjects = this.buildGameObjects(firstNode, secondNode);
+    const gameObjects = this.buildGameObjects();
     const geometries = this.buildGeometries(firstNode, secondNode);
     const edge = new Edge(firstNode, secondNode, gameObjects, geometries);
     this.graph.addEdge(edge);
