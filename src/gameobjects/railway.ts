@@ -3,29 +3,20 @@ import { Edge } from "../graph/edge";
 import { EdgeGeometries } from "../builders/edge-builder";
 import { CurveForRender } from "../geometry/curve";
 import { Constants } from "../constants";
+import { GameObject } from "../gameobjects/gameobject";
 
-abstract class Railway
-  extends Phaser.GameObjects.Group
+class Railway
+  extends GameObject
   implements GameObjectOnGraph
 {
   image: string = "no-image";
   tint: number = Constants.PRIMARY_COLOR;
   depth: number = 0;
   rails: Array<Phaser.GameObjects.Sprite> = [];
-  _graphParentElement: Edge;
 
   _curve(): CurveForRender {
     // @ts-ignore
     return this.graphParentElement.geometries[EdgeGeometries.CURVE__RENDER];
-  }
-
-  get graphParentElement(): Edge {
-    return this._graphParentElement;
-  }
-
-  set graphParentElement(edge: Edge) {
-    this._graphParentElement = edge;
-    this.populate();
   }
 
   populate() {
@@ -60,12 +51,17 @@ abstract class Railway
   }
 }
 
-export class TopRailway extends Railway {
+
+export class TopRailway 
+	extends Railway 
+{
   image: string = "rail-top";
   depth: number = 2;
 }
 
-export class BottomRailway extends Railway {
+export class BottomRailway 
+  extends Railway 
+{
   image: string = "rail-bottom";
   depth: number = 1;
   tint: number = Constants.randomColor();
