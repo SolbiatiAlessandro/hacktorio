@@ -10,8 +10,8 @@ import { NodeGeometries } from "../builders/node-builder";
 
 import { GameObjectOnGraph } from "../interfaces/graph.interface";
 
-import { Handle } from "../gameobjects/controller/handle"
-import { Line } from "../gameobjects/controller/line"
+import { Handle } from "../gameobjects/controller/handle";
+import { Line } from "../gameobjects/controller/line";
 
 export class Controller
   extends Phaser.GameObjects.Group
@@ -56,11 +56,11 @@ export class Controller
 
   populate() {
     this.rightHandle = new Handle(this.scene, this.pointRight());
-		this.add(this.rightHandle, true);
+    this.add(this.rightHandle, true);
     this.leftHandle = new Handle(this.scene, this.pointLeft());
-		this.add(this.leftHandle, true);
-		this.line = new Line(this.scene, this.leftHandle, this.rightHandle);
-		this.add(this.line, true);
+    this.add(this.leftHandle, true);
+    this.line = new Line(this.scene, this.leftHandle, this.rightHandle);
+    this.add(this.line, true);
     this.controllerCenter = this.create(
       ...this.pointCenter().vector(),
       "controlPointCenter"
