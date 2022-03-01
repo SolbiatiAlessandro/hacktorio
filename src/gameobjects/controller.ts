@@ -49,10 +49,6 @@ implements GameObjectOnGraph
   }
 
 	populate(){
-		this.controllerCenter = this.create(
-			...this.pointCenter().vector(),
-			"controlPointCenter"
-		);
 		this.rightHandle = this.create(
 			...this.pointRight().vector(),
 			"controlPoint"
@@ -61,16 +57,25 @@ implements GameObjectOnGraph
 			...this.pointLeft().vector(),
 			"controlPoint"
 		);
+		this.createLine();
+		this.controllerCenter = this.create(
+			...this.pointCenter().vector(),
+			"controlPointCenter"
+		);
+		this.setDepth(this.depth);
+	}
+
+	createLine(){
 		this.line = new Phaser.GameObjects.Line(
       this.scene,
       0, 0,
       this.leftHandle.x, this.leftHandle.y,
       this.rightHandle.x, this.rightHandle.y,
-			Constants.PRIMARY_COLOR, 0.5
+			Constants.PRIMARY_COLOR, 0.8
     );
 		this.line.setOrigin(0, 0);
+		this.scene.add.existing(this.line);
 		this.add(this.line);
-		this.setDepth(this.depth);
 	}
 
 	update(){};
