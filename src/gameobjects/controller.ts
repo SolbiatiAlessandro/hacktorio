@@ -10,15 +10,15 @@ import { NodeGeometries } from "../builders/node-builder";
 
 import { GameObjectOnGraph } from "../interfaces/graph.interface";
 
+import { GameObject } from "../gameobjects/gameobject";
+
 import { Handle } from "../gameobjects/controller/handle";
 import { Line } from "../gameobjects/controller/line";
 
 export class Controller
-  extends Phaser.GameObjects.Group
+  extends GameObject
   implements GameObjectOnGraph
 {
-  _graphParentElement: Node;
-
   controllerCenter: Phaser.GameObjects.Sprite;
   rightHandle: Handle;
   leftHandle: Handle;
@@ -43,15 +43,6 @@ export class Controller
     return this.graphParentElement.geometries[
       NodeGeometries.POINT__RIGHT_HANDLE
     ];
-  }
-
-  get graphParentElement(): Node {
-    return this._graphParentElement;
-  }
-
-  set graphParentElement(edge: Node) {
-    this._graphParentElement = edge;
-    this.populate();
   }
 
   populate() {
