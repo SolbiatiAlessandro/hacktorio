@@ -1,3 +1,5 @@
+import { Constants } from "../constants"; 
+
 import { MainScene } from "../scenes/main-scene";
 
 import { Node } from "../graph/node";
@@ -8,17 +10,6 @@ import { NodeGeometries } from "../builders/node-builder";
 
 import { GameObjectOnGraph } from "../interfaces/graph.interface";
 
-class ControllerCenter extends Phaser.GameObjects.Image {
-	constructor(scene: MainScene){
-		super(scene, 0, 0, "controlPointCenter");
-	}
-}
-
-class ControllerHandle extends Phaser.GameObjects.Image {
-	constructor(scene: MainScene){
-		super(scene, 0, 0, "controlPoint");
-	}
-}
 
 export class Controller   
 extends Phaser.GameObjects.Group
@@ -26,18 +17,26 @@ implements GameObjectOnGraph
 {
   _graphParentElement: Node;
 
-	controllerCenter: ControllerCenter;
-	rightHandle: ControllerHandle;
-	leftHandle: ControllerHandle;
+	controllerCenter: Phaser.GameObjects.Sprite;
+	rightHandle: Phaser.GameObjects.Sprite;
+	leftHandle: Phaser.GameObjects.Sprite;
+	line: Phaser.GameObjects.Line;
 
-	constructor(scene: MainScene){
-		super(scene);
-		this.controllerCenter = new ControllerCenter(scene);
-		this.add(this.controllerCenter);
-		this.rightHandle = new ControllerHandle(scene);
-		this.add(this.rightHandle);
-		this.leftHandle = new ControllerHandle(scene);
-		this.add(this.leftHandle);
+	depth: number = 3;
+
+	pointCenter(): Point{
+		//@ts-ignore
+		return this.graphParentElement.geometries[NodeGeometries.POINT__CENTER];
+	}
+
+	pointLeft(): Point{
+		//@ts-ignore
+		return this.graphParentElement.geometries[NodeGeometries.POINT__LEFT_HANDLE];
+	}
+
+	pointRight(): Point{
+		//@ts-ignore
+		return this.graphParentElement.geometries[NodeGeometries.POINT__RIGHT_HANDLE];
 	}
 
   get graphParentElement(): Node {
@@ -46,30 +45,32 @@ implements GameObjectOnGraph
 
   set graphParentElement(edge: Node) {
     this._graphParentElement = edge;
-		this.setupImages();
+		this.populate();
   }
 
-	setupImages(){
-		this._setupImage(
-		  //@ts-ignore
-			this.graphParentElement.geometries[NodeGeometries.POINT__CENTER],
-			this.controllerCenter
+	populate(){
+		this.controllerCenter = this.create(
+			...this.pointCenter().vector(),
+			"controlPointCenter"
 		);
-		this._setupImage(
-		  //@ts-ignore
-			this.graphParentElement.geometries[NodeGeometries.POINT__RIGHT_HANDLE],
-			this.rightHandle
+		this.rightHandle = this.create(
+			...this.pointRight().vector(),
+			"controlPoint"
 		);
-		this._setupImage(
-		  //@ts-ignore
-			this.graphParentElement.geometries[NodeGeometries.POINT__LEFT_HANDLE],
-			this.leftHandle
+		this.leftHandle = this.create(
+			...this.pointLeft().vector(),
+			"controlPoint"
 		);
-	}
-
-	_setupImage(point: Point, image: ControllerCenter | ControllerHandle){
-		image.x = point.x;
-		image.y = point.y;
+		this.line = new Phaser.GameObjects.Line(
+      this.scene,
+      0, 0,
+      this.leftHandle.x, this.leftHandle.y,
+      this.rightHandle.x, this.rightHandle.y,
+			Constants.PRIMARY_COLOR, 0.5
+    );
+		this.line.setOrigin(0, 0);
+		this.add(this.line);
+		this.setDepth(this.depth);
 	}
 
 	update(){};
