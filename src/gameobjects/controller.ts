@@ -56,13 +56,13 @@ export class Controller
     this.rightHandle = new Handle(
       this.scene,
       this.pointRight,
-      this.onDrag("rightHandle")
+      this.onDrag("rightHandle", "leftHandle")
     );
     this.add(this.rightHandle, true);
     this.leftHandle = new Handle(
       this.scene,
       this.pointLeft,
-      this.onDrag("leftHandle")
+      this.onDrag("leftHandle", "rightHandle")
     );
     this.add(this.leftHandle, true);
   }
@@ -78,14 +78,16 @@ export class Controller
     this.setDepth(this.depth);
   }
 
-  onDrag(who: "rightHandle" | "leftHandle"): (x: number, y: number) => void {
+  onDrag(
+		handle: "rightHandle" | "leftHandle",
+		otherHandle: "rightHandle" | "leftHandle",
+	): (x: number, y: number) => void {
     return function (x: number, y: number) {
-      const handle = who == "rightHandle" ? this.rightHandle : this.leftHandle;
-      const otherHandle =
-        who == "rightHandle" ? this.leftHandle : this.rightHandle;
-      handle.setPosition(x, y);
-      otherHandle.setPosition(...this.pointCenter.reflectBy(x, y));
-      this.line.setTo(handle.x, handle.y, otherHandle.x, otherHandle.y);
+      this[handle].setPosition(x, y);
+			this[handle].point.setPosition(x, y);
+      this[otherHandle].setPosition(...this.pointCenter.reflectBy(x, y));
+			this[otherHandle].point.setPosition(...this.pointCenter.reflectBy(x, y));
+      this.line.setTo(this[handle].x, this[handle].y, this[otherHandle].x, this[otherHandle].y);
     }.bind(this);
   }
 
