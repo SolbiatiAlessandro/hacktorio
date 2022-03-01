@@ -2,7 +2,7 @@ import {GeometryOnGraph} from "../interfaces/graph.interface"
 
 export 
 class Point
-extends Phaser.Geom.Point 
+extends Phaser.Math.Vector2
 implements GeometryOnGraph 
 {
 	graphParentElement: any;

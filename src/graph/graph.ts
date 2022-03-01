@@ -1,6 +1,7 @@
 import * as graphology from "graphology";
 
 import { Node }  from "../graph/node";
+import { Edge }  from "../graph/edge";
 
 // @ts-ignore
 export class Graph extends graphology.Graph{
@@ -25,6 +26,13 @@ export class Graph extends graphology.Graph{
 		attr[this.NODE] = node;
 		super.addNode(node.name, attr);
 		return node.name;
+	}
+
+	addEdge(edge: Edge): string {
+		let attr: any = {};
+		attr[this.EDGE] = edge;
+		super.addEdgeWithKey(edge.name, edge.firstNode.name, edge.secondNode.name, attr);
+		return edge.name
 	}
 }
 
