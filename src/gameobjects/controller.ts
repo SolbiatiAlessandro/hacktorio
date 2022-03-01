@@ -84,7 +84,7 @@ export class Controller
       const otherHandle =
         who == "rightHandle" ? this.leftHandle : this.rightHandle;
       handle.setPosition(x, y);
-      otherHandle.setPosition(...this.pointCenter().reflectBy(x, y));
+      otherHandle.setPosition(...this.pointCenter.reflectBy(x, y));
       this.line.setTo(handle.x, handle.y, otherHandle.x, otherHandle.y);
     }.bind(this);
   }

@@ -17,6 +17,12 @@ class GameObjectWithRailwayGeometries
   update() {}
 }
 
+function rotateRail(rail: Phaser.GameObjects.Sprite, tangent: Phaser.Math.Vector2){
+	rail.rotation =
+		Phaser.Math.Angle.Between(0, 0, tangent.x, tangent.y) +
+		Phaser.Math.PI2 / 4;
+}
+
 class Railway
   extends GameObjectWithRailwayGeometries
   implements GameObjectOnGraph
@@ -32,9 +38,7 @@ class Railway
       .forEach(([point, tangent], index) => {
         const rail = this.getFirstDead(true, point.x, point.y, this.image);
         rail.setTint(this.tint);
-        rail.rotation =
-          Phaser.Math.Angle.Between(0, 0, tangent.x, tangent.y) +
-          Phaser.Math.PI2 / 4;
+				rotateRail(rail, tangent);
 
         rail.displayHeight = 32;
         rail.displayWidth = 64;
@@ -48,11 +52,8 @@ class Railway
       .pointsWithTangents()
       .forEach(([point, tangent], index) => {
         const rail = this.rails[index];
-        rail.x = point.x;
-        rail.y = point.y;
-        rail.rotation =
-          Phaser.Math.Angle.Between(0, 0, tangent.x, tangent.y) +
-          Phaser.Math.PI2 / 4;
+        rail.setPosition(point.x, point.y);
+				rotateRail(rail, tangent);
       });
     this.setDepth(this.depth);
   }
