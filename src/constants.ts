@@ -9,4 +9,10 @@ export abstract class Constants {
   static readonly HIGHLIGHT_COLORS: Array<number> = [
     0xff4e02, 0x1ab157, 0xfe86b3, 0x4470e7, 0xfd9a1d,
   ];
+
+  static randomColor(): number {
+    return this.HIGHLIGHT_COLORS[
+      Math.floor(Math.random() * this.HIGHLIGHT_COLORS.length)
+    ];
+  }
 }
