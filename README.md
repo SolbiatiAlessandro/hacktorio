@@ -4,7 +4,6 @@ Strict abstraction barriers between each domain (Graph, GameObjects, Geometry, .
 
 See [Structure And Interpretation Of Computer Programs, Abstraction Barriers](https://mitpress.mit.edu/sites/default/files/sicp/full-text/book/book-Z-H-14.html#%_sec_2.1.2)
 
-
 Here are some ideas for how the game architecture works (that's not a complete architecture, just the patterns being used)
 
 ![](https://github.com/SolbiatiAlessandro/hacktorio/blob/master/imgs/architecture.png?raw=true)
@@ -26,7 +25,7 @@ MainScene
     gameObjects = [new Controller(x, y)];
 	graph = Graph.get()
     graph.addNode(new Node(geometries, gameObjects));
-	
+
 - newEdge(firstNode, secondNode)
     let curve = new curveToRender();
 	geometries = [curve, new curveToTest()];
@@ -107,7 +106,7 @@ Railway implements GameObjectOnEdge.interface
 	putback
 
 ShadowRailway extends Railway
-- select 
+- select
 	display = true
 - deselect
 	display = false
@@ -154,11 +153,9 @@ CurveForTest extend Curve
     else
 		emitter.emit(CURVE-VALID)
 
-- checkBreaksDistance	
+- checkBreaksDistance
 - checkbreaksCurvature
 ```
-
-
 
 ## Dev Workflow
 
@@ -180,4 +177,5 @@ Protip: use empty github comments to keep track of new features
 ```
 git commit --allow-empty  (feature ideas descriptions)
 git log --graph --decorate --oneline --all
+prettier --write .
 ```

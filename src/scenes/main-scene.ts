@@ -1,17 +1,28 @@
-import {GraphBuilder} from "../builders/graph-builder"
+import { EdgeBuilder } from "../builders/edge-builder";
+import { NodeBuilder } from "../builders/node-builder";
+import { Graph } from "../graph/graph";
 
 export class MainScene extends Phaser.Scene {
+  graph: Graph = Graph.getInstance();
+
   constructor() {
     super({ key: "MainScene" });
   }
 
   create(): void {
-	  const builder = new GraphBuilder();
-	  const node1 = builder.newNode("1", 300, 400);
-	  const node2 = builder.newNode("2", 600, 600);
-	  builder.newEdge(node1, node2);
+    const nodeBuilder = new NodeBuilder(this);
+    const node1 = nodeBuilder.build(300, 100);
+    const node2 = nodeBuilder.build(500, 200);
+    const node3 = nodeBuilder.build(700, 500);
+    const node4 = nodeBuilder.build(800, 300);
+
+    const edgeBuilder = new EdgeBuilder(this);
+    edgeBuilder.build(node1, node2);
+    edgeBuilder.build(node2, node3);
+    edgeBuilder.build(node2, node4);
   }
 
   update(): void {
+    this.graph.update();
   }
 }

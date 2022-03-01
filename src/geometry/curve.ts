@@ -1,4 +1,4 @@
-import {Point} from "../geometry/point";
+import { Point } from "../geometry/point";
 
 export class Curve extends Phaser.Curves.CubicBezier {
   graphParentElement: any;
@@ -6,12 +6,7 @@ export class Curve extends Phaser.Curves.CubicBezier {
   segments: number;
   private readonly _LENGTH_SEGMENT_RATIO: number = 15;
 
-  constructor(
-    A: Point,
-    B: Point,
-    C: Point,
-    D: Point
-  ) {
+  constructor(A: Point, B: Point, C: Point, D: Point) {
     super(A, B, C, D);
     this.segments = Math.floor(this.getLength() / this._LENGTH_SEGMENT_RATIO);
   }
@@ -32,12 +27,11 @@ export class Curve extends Phaser.Curves.CubicBezier {
     return curv;
   }
 
-  update(){}
+  update() {}
 }
 
 // this is the curve used to render railways images
 export class CurveForRender extends Curve {
-
   pointsWithTangents(): Array<[Phaser.Math.Vector2, Phaser.Math.Vector2]> {
     const _points = super.points();
     return Array(this.segments + 1)
@@ -95,6 +89,6 @@ export class CurveForTest extends Curve {
 }
 
 export enum CurveTypes {
-	FOR_RENDER,
-	FOR_TEST
+  FOR_RENDER,
+  FOR_TEST,
 }
