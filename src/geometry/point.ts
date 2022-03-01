@@ -12,8 +12,8 @@ export class Point extends Phaser.Math.Vector2 implements GeometryOnGraph {
     return [this.x - (x - this.x), this.y - (y - this.y)];
   }
 
-	setPosition(x: number, y: number){
-		this.x = x;
-		this.y = y;
-	}
+  setPosition(x: number, y: number) {
+    this.x = x;
+    this.y = y;
+  }
 }

@@ -79,15 +79,20 @@ export class Controller
   }
 
   onDrag(
-		handle: "rightHandle" | "leftHandle",
-		otherHandle: "rightHandle" | "leftHandle",
-	): (x: number, y: number) => void {
+    handle: "rightHandle" | "leftHandle",
+    otherHandle: "rightHandle" | "leftHandle"
+  ): (x: number, y: number) => void {
     return function (x: number, y: number) {
       this[handle].setPosition(x, y);
-			this[handle].point.setPosition(x, y);
+      this[handle].point.setPosition(x, y);
       this[otherHandle].setPosition(...this.pointCenter.reflectBy(x, y));
-			this[otherHandle].point.setPosition(...this.pointCenter.reflectBy(x, y));
-      this.line.setTo(this[handle].x, this[handle].y, this[otherHandle].x, this[otherHandle].y);
+      this[otherHandle].point.setPosition(...this.pointCenter.reflectBy(x, y));
+      this.line.setTo(
+        this[handle].x,
+        this[handle].y,
+        this[otherHandle].x,
+        this[otherHandle].y
+      );
     }.bind(this);
   }
 
