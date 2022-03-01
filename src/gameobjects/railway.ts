@@ -1,6 +1,6 @@
 import { GameObjectOnGraph } from "../interfaces/graph.interface";
 import { Edge } from "../graph/edge";
-import { GeometryEdge } from "../builders/edge-builder";
+import { EdgeGeometries } from "../builders/edge-builder";
 import { CurveForRender } from "../geometry/curve";
 import { Constants } from "../constants";
 
@@ -14,11 +14,9 @@ abstract class Railway
   rails: Array<Phaser.GameObjects.Sprite> = [];
   _graphParentElement: Edge;
 
-  _curve() {
+  _curve(): CurveForRender {
     // @ts-ignore
-    const curve: CurveForRender =
-      this.graphParentElement.geometries[GeometryEdge.CURVE__RENDER];
-    return curve;
+    return this.graphParentElement.geometries[EdgeGeometries.CURVE__RENDER];
   }
 
   get graphParentElement(): Edge {

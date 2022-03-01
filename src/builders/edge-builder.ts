@@ -17,12 +17,12 @@ import { TopRailway, BottomRailway } from "../gameobjects/railway";
 
 import { MainScene } from "../scenes/main-scene";
 
-export enum GeometryEdge {
+export enum EdgeGeometries {
   CURVE__RENDER,
   CURVE__TEST,
 }
 
-export enum GameObjectEdge {
+export enum EdgeGameObjects {
   RAILWAY__TOP,
   RAILWAY__BOTTOM,
 }
@@ -37,12 +37,12 @@ export class EdgeBuilder {
     secondNode: Node
   ): Record<string, GeometryOnGraph> {
     const geometries: Record<string, GeometryOnGraph> = {};
-    geometries[GeometryEdge.CURVE__RENDER] = this.geometryBuilder.newCurve(
+    geometries[EdgeGeometries.CURVE__RENDER] = this.geometryBuilder.newCurve(
       CurveTypes.FOR_RENDER,
       firstNode,
       secondNode
     );
-    geometries[GeometryEdge.CURVE__TEST] = this.geometryBuilder.newCurve(
+    geometries[EdgeGeometries.CURVE__TEST] = this.geometryBuilder.newCurve(
       CurveTypes.FOR_TEST,
       firstNode,
       secondNode
@@ -52,8 +52,8 @@ export class EdgeBuilder {
 
   buildGameObjects(): Record<string, GameObjectOnGraph> {
     const gameObjects: Record<string, GameObjectOnGraph> = {};
-    gameObjects[GameObjectEdge.RAILWAY__TOP] = new TopRailway(this.scene);
-    gameObjects[GameObjectEdge.RAILWAY__BOTTOM] = new BottomRailway(this.scene);
+    gameObjects[EdgeGameObjects.RAILWAY__TOP] = new TopRailway(this.scene);
+    gameObjects[EdgeGameObjects.RAILWAY__BOTTOM] = new BottomRailway(this.scene);
     return gameObjects;
   }
 
