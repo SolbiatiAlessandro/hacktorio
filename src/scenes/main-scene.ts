@@ -10,6 +10,16 @@ export class MainScene extends Phaser.Scene {
   }
 
   create(): void {
+    this.createGraph();
+    this.input.on(
+      "drag",
+      function (pointer: any, gameObject: any, x: number, y: number) {
+        gameObject.onDrag(x, y);
+      }
+    );
+  }
+
+  createGraph() {
     const nodeBuilder = new NodeBuilder(this);
     const node1 = nodeBuilder.build(300, 100);
     const node2 = nodeBuilder.build(500, 200);

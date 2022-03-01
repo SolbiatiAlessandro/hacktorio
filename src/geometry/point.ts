@@ -7,4 +7,8 @@ export class Point extends Phaser.Math.Vector2 implements GeometryOnGraph {
   vector(): [number, number] {
     return [this.x, this.y];
   }
+
+  reflectBy(x: number, y: number): [number, number] {
+    return [this.x - (x - this.x), this.y - (y - this.y)];
+  }
 }
