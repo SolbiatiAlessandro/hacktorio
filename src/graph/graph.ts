@@ -20,12 +20,23 @@ export class GraphObject {
   }
 }
 
+export class GraphSelection {
+  static selectEdge(edge: Edge, config: GraphSelectConfig) {
+    const graph = Graph.getInstance();
+    graph
+      .allEdges()
+      .map((edge: Edge) => edge.broadcastToGameObjects(config.eventForAll));
+  }
+}
+
 // @ts-ignore
 export class Graph extends graphology.Graph {
   private static instance: Graph;
 
   private readonly NODE: string = "_node";
   private readonly EDGE: string = "_edge";
+
+  public selectedEdge: Edge = null;
 
   public static getInstance(): Graph {
     if (!Graph.instance) {
@@ -59,17 +70,6 @@ export class Graph extends graphology.Graph {
 
   allNodes() {
     return super.mapNodes((_: string, attr: any) => attr[this.NODE]);
-  }
-
-  broadcastToAllEdges(event: number) {
-    this.allEdges().map((edge: Edge) => edge.broadcast(event));
-  }
-
-  private selectedEdge: Edge = null;
-
-  public selectEdge(edge: Edge, config: GraphSelectConfig) {
-    this.selectedEdge = edge;
-    this.broadcastToAllEdges(config.eventForAll);
   }
 
   update() {
