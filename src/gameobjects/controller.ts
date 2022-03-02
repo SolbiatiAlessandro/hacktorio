@@ -48,6 +48,7 @@ export class Controller
       "controlPointCenter"
     );
     this.setDepth(this.depth);
+		this.setVisible(false);
   }
 
   onDrag(
@@ -76,5 +77,11 @@ export class Controller
       this._setTint(Constants.ERROR_COLOR);
       this.valid = false;
     }
+		if (event == Events.RAILWAY_SELECTED) {
+			this.setVisible(true);
+		}
+		if (event == Events.RAILWAY_DESELECTED) {
+			this.setVisible(false);
+		}
   }
 }

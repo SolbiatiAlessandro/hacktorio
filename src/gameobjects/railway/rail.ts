@@ -4,7 +4,8 @@ export class Rail extends Phaser.GameObjects.Sprite {
     point: Phaser.Math.Vector2,
     image: string,
     tint: number,
-    tangent: Phaser.Math.Vector2
+    tangent: Phaser.Math.Vector2,
+		onClick: () => void
   ) {
     super(scene, point.x, point.y, image);
     this.displayHeight = 32;
@@ -12,6 +13,8 @@ export class Rail extends Phaser.GameObjects.Sprite {
     this.setScale(0.5);
     this.rotate(tangent);
     this.setTint(tint);
+		this.setInteractive();
+		this.on("pointerdown", (pointer: any) => {onClick();});
   }
 
   rotate(tangent: Phaser.Math.Vector2) {
@@ -20,8 +23,8 @@ export class Rail extends Phaser.GameObjects.Sprite {
       Phaser.Math.PI2 / 4;
   }
 
-  update(point: Phaser.Math.Vector2, tangent: Phaser.Math.Vector2) {
-    this.setPosition(point.x, point.y);
+  update(x: number, y: number, tangent: Phaser.Math.Vector2) {
+    this.setPosition(x, y);
     this.rotate(tangent);
   }
 }

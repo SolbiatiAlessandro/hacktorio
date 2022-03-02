@@ -2,6 +2,8 @@ import { GameObjectOnGraph } from "../interfaces/graph.interface";
 import { Edge } from "../graph/edge";
 import { EdgeGeometries } from "../builders/edge-builder";
 import { CurveForRender } from "../geometry/curve";
+
+import { Events } from "../events";
 import { Constants } from "../constants";
 
 import { GameObject } from "../gameobjects/gameobject";
@@ -27,10 +29,18 @@ class Railway
   tint: number = Constants.PRIMARY_COLOR;
   depth: number = 0;
   rails: Array<Rail> = [];
+	yOffset: number = 0;
+
+	pointerdown(){
+		this.graphParentElement.broadcastToAllEdges(Events.RAILWAY_DESELECTED);
+		this.graphParentElement.broadcastToAllNodes(Events.RAILWAY_DESELECTED);
+		this.graphParentElement.broadcastToNeighbourNodes(Events.RAILWAY_SELECTED);
+		this.graphParentElement.broadcastToGameObjects(Events.RAILWAY_SELECTED);
+	}
 
   populate() {
     this.curve.pointsWithTangents().forEach(([point, tangent], index) => {
-      const rail = new Rail(this.scene, point, this.image, this.tint, tangent);
+      const rail = new Rail(this.scene, point, this.image, this.tint, tangent, this.pointerdown.bind(this));
       this.rails.push(rail);
       this.add(rail, true);
     });
@@ -38,19 +48,39 @@ class Railway
 
   update() {
     this.curve.pointsWithTangents().forEach(([point, tangent], index) => {
-      this.rails[index].update(point, tangent);
-    });
+      this.rails[index].update(point.x, point.y + this.yOffset, tangent);});
     this.setDepth(this.depth);
   }
+
 }
+
+const LIFT_OFFSET = -5;
 
 export class TopRailway extends Railway {
   image: string = "rail-top";
   depth: number = 2;
+
+	onEvent(event: number){
+		if (event == Events.RAILWAY_SELECTED){
+			this.yOffset = LIFT_OFFSET;
+		}
+		if (event == Events.RAILWAY_DESELECTED){
+			this.yOffset = 0;
+		}
+	}
 }
 
 export class BottomRailway extends Railway {
   image: string = "rail-bottom";
   depth: number = 1;
   tint: number = Constants.randomColor();
+
+	onEvent(event: number){
+		if (event == Events.RAILWAY_SELECTED){
+			this.yOffset = LIFT_OFFSET;
+		}
+		if (event == Events.RAILWAY_DESELECTED){
+			this.yOffset = 0;
+		}
+	}
 }
