@@ -1,45 +1,13 @@
 import { Constants } from "../constants";
-
-import { MainScene } from "../scenes/main-scene";
-
-import { Node } from "../graph/node";
+import { Events } from "../events";
 
 import { Point } from "../geometry/point";
 
-import { NodeGeometries } from "../builders/node-builder";
-
 import { GameObjectOnGraph } from "../interfaces/graph.interface";
-
-import { GameObject } from "../gameobjects/gameobject";
 
 import { Handle } from "../gameobjects/controller/handle";
 import { Line } from "../gameobjects/controller/line";
-
-class GameObjectWithControllerGeometries
-  extends GameObject
-  implements GameObjectOnGraph
-{
-  get pointCenter(): Point {
-    //@ts-ignore
-    return this.graphParentElement.geometries[NodeGeometries.POINT__CENTER];
-  }
-
-  get pointLeft(): Point {
-    //@ts-ignore
-    return this.graphParentElement.geometries[
-      NodeGeometries.POINT__LEFT_HANDLE
-    ];
-  }
-
-  get pointRight(): Point {
-    //@ts-ignore
-    return this.graphParentElement.geometries[
-      NodeGeometries.POINT__RIGHT_HANDLE
-    ];
-  }
-
-  update() {}
-}
+import { GameObjectWithControllerGeometries } from "../gameobjects/controller/controller-geometries";
 
 export class Controller
   extends GameObjectWithControllerGeometries
@@ -50,18 +18,22 @@ export class Controller
   leftHandle: Handle;
   line: Line;
 
+  valid: boolean = true;
+
   depth: number = 3;
 
   populateHandles() {
     this.rightHandle = new Handle(
       this.scene,
-      this.pointRight,
+      this.pointRightTest,
+      this.pointRightRender,
       this.onDrag("rightHandle", "leftHandle")
     );
     this.add(this.rightHandle, true);
     this.leftHandle = new Handle(
       this.scene,
-      this.pointLeft,
+      this.pointLeftTest,
+      this.pointLeftRender,
       this.onDrag("leftHandle", "rightHandle")
     );
     this.add(this.leftHandle, true);
@@ -83,18 +55,26 @@ export class Controller
     otherHandle: "rightHandle" | "leftHandle"
   ): (x: number, y: number) => void {
     return function (x: number, y: number) {
-      this[handle].setPosition(x, y);
-      this[handle].point.setPosition(x, y);
-      this[otherHandle].setPosition(...this.pointCenter.reflectBy(x, y));
-      this[otherHandle].point.setPosition(...this.pointCenter.reflectBy(x, y));
-      this.line.setTo(
-        this[handle].x,
-        this[handle].y,
-        this[otherHandle].x,
-        this[otherHandle].y
-      );
+      this[handle].move(x, y, this.valid);
+      this[otherHandle].move(...this.pointCenter.reflectBy(x, y), this.valid);
+      this.line.move(this[handle], this[otherHandle]);
     }.bind(this);
   }
 
-  update() {}
+  _setTint(color: number) {
+    this.rightHandle.setTint(color);
+    this.leftHandle.setTint(color);
+    this.line.setTint(color);
+  }
+
+  onEvent(event: number) {
+    if (event == Events.CURVE_VALID) {
+      this._setTint(Constants.PRIMARY_COLOR);
+      this.valid = true;
+    }
+    if (event == Events.CURVE_INVALID) {
+      this._setTint(Constants.ERROR_COLOR);
+      this.valid = false;
+    }
+  }
 }

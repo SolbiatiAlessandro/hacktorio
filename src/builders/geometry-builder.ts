@@ -6,19 +6,23 @@ import { NodeGeometries } from "../builders/node-builder";
 
 export class GeometryBuilder {
   newCurve(type: CurveTypes, firstNode: Node, secondNode: Node) {
-    const points = [
-      firstNode.geometries[NodeGeometries.POINT__CENTER],
-      firstNode.geometries[NodeGeometries.POINT__RIGHT_HANDLE],
-      secondNode.geometries[NodeGeometries.POINT__LEFT_HANDLE],
-      secondNode.geometries[NodeGeometries.POINT__CENTER],
-    ] as const;
     if (type == CurveTypes.FOR_RENDER) {
-      //@ts-ignore
-      return new CurveForRender(...points);
+      return new CurveForRender(
+        //@ts-ignore
+        firstNode.geometries[NodeGeometries.POINT__CENTER],
+        firstNode.geometries[NodeGeometries.POINT__RIGHT_HANDLE],
+        secondNode.geometries[NodeGeometries.POINT__LEFT_HANDLE],
+        secondNode.geometries[NodeGeometries.POINT__CENTER]
+      );
     }
     if (type == CurveTypes.FOR_TEST) {
-      //@ts-ignore
-      return new CurveForTest(...points);
+      return new CurveForTest(
+        //@ts-ignore
+        firstNode.geometries[NodeGeometries.POINT__CENTER],
+        firstNode.geometries[NodeGeometries.POINT__RIGHT_HANDLE_TEST],
+        secondNode.geometries[NodeGeometries.POINT__LEFT_HANDLE_TEST],
+        secondNode.geometries[NodeGeometries.POINT__CENTER]
+      );
     }
   }
 }

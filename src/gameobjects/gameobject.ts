@@ -13,6 +13,10 @@ export class GameObject extends Phaser.GameObjects.Group {
     this.populate();
   }
 
-  // this.graphParentElement has been set
+  // here this.graphParentElement has been set
   populate() {}
+
+  onEvent(event: number) {}
+
+  update() {}
 }

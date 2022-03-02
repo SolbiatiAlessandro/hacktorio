@@ -17,4 +17,12 @@ export class Line extends Phaser.GameObjects.Line {
     );
     this.setOrigin(0, 0);
   }
+
+  move(left: Handle, right: Handle) {
+    this.setTo(left.x, left.y, right.x, right.y);
+  }
+
+  setTint(color: number) {
+    this.setStrokeStyle(0.5, color, 1);
+  }
 }
