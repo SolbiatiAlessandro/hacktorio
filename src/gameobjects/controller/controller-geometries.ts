@@ -1,8 +1,14 @@
 import { GameObject } from "../../gameobjects/gameobject";
 import { NodeGeometries } from "../../builders/node-builder";
 import { Point } from "../../geometry/point";
+import { Node } from "../../graph/node"; 
 
-export class GameObjectWithControllerGeometries extends GameObject {
+export class GameObjectWithControllerTypes extends GameObject {
+	get graphParentNode(): Node {
+		//@ts-ignore
+    return this.graphParentElement;
+	};
+
   get pointCenter(): Point {
     //@ts-ignore
     return this.graphParentElement.geometries[NodeGeometries.POINT__CENTER];

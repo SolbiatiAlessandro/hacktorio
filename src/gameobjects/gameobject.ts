@@ -1,5 +1,6 @@
 import { Edge } from "../graph/edge";
 import { Node } from "../graph/node";
+import { Event } from "../events";
 
 export class GameObject extends Phaser.GameObjects.Group {
   _graphParentElement: Edge | Node;
@@ -16,7 +17,7 @@ export class GameObject extends Phaser.GameObjects.Group {
   // here this.graphParentElement has been set
   populate() {}
 
-  onEvent(event: number) {}
+  onEvent(event: Event) {}
 
   update() {}
 }

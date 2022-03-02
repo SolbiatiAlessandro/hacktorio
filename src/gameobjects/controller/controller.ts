@@ -7,10 +7,10 @@ import { GameObjectOnGraph } from "../../interfaces/graph.interface";
 
 import { Handle } from "../../gameobjects/controller/handle";
 import { Line } from "../../gameobjects/controller/line";
-import { GameObjectWithControllerGeometries } from "../../gameobjects/controller/controller-geometries";
+import { GameObjectWithControllerTypes } from "../../gameobjects/controller/controller-geometries";
 
 export class Controller
-  extends GameObjectWithControllerGeometries
+  extends GameObjectWithControllerTypes
   implements GameObjectOnGraph
 {
   controllerCenter: Phaser.GameObjects.Sprite;
@@ -23,13 +23,16 @@ export class Controller
   depth: number = 5;
   imageOffsetY: number = -20;
 
+	pointerdown(){}
+
   populateHandles() {
     this.rightHandle = new Handle(
       this.scene,
       this.pointRightTest,
       this.pointRightRender,
       this.onDrag("rightHandle", "leftHandle"),
-      this.imageOffsetY
+      this.imageOffsetY,
+			this.pointerdown.bind(this),
     );
     this.add(this.rightHandle, true);
     this.leftHandle = new Handle(
@@ -37,7 +40,8 @@ export class Controller
       this.pointLeftTest,
       this.pointLeftRender,
       this.onDrag("leftHandle", "rightHandle"),
-      this.imageOffsetY
+      this.imageOffsetY,
+			this.pointerdown.bind(this),
     );
     this.add(this.leftHandle, true);
   }
@@ -72,7 +76,7 @@ export class Controller
     this.line.setTint(color);
   }
 
-  onEvent(event: number) {
+  onEvent(event: Events) {
     if (event == Events.CURVE_VALID) {
       this._setTint(Constants.PRIMARY_COLOR);
       this.valid = true;
@@ -81,10 +85,10 @@ export class Controller
       this._setTint(Constants.ERROR_COLOR);
       this.valid = false;
     }
-    if (event == Events.RAILWAY_SELECTED) {
+    if (event == Events.NODE_SELECTED) {
       this.setVisible(true);
     }
-    if (event == Events.RAILWAY_DESELECTED) {
+    if (event == Events.NODE_DESELECTED) {
       this.setVisible(false);
     }
   }

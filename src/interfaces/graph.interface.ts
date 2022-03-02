@@ -1,14 +1,11 @@
 import { Node } from "../graph/node";
 import { Edge } from "../graph/edge";
-
-export interface GraphSelectConfig {
-  eventForAll: number; // broadcast to all edges, e.g. eventForAll = deselect
-}
+import { Event }  from "../events";
 
 export interface GameObjectOnGraph {
   graphParentElement: Node | Edge;
   update: () => void;
-  onEvent: (event: number) => void;
+  onEvent: (event: Event) => void;
 }
 
 export interface GeometryOnGraph {

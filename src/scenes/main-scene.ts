@@ -1,6 +1,6 @@
 import { EdgeBuilder } from "../builders/edge-builder";
 import { NodeBuilder } from "../builders/node-builder";
-import { Graph } from "../graph/graph";
+import { Graph, GraphSelection } from "../graph/graph";
 import { Edge } from "../graph/edge";
 import { Node } from "../graph/node";
 import { Events } from "../events";
@@ -27,9 +27,7 @@ export class MainScene extends Phaser.Scene {
         currentlyOver: Array<Phaser.GameObjects.GameObject>
       ) {
         if (currentlyOver.length == 0) {
-          this.graph.selectEdge(null, {
-            eventsForAll: Events.RAILWAY_DESELECTED,
-          });
+					this.graph.graphSelection.emptySelection();
         }
       }.bind(this)
     );
