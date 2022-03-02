@@ -1,7 +1,9 @@
 import * as graphology from "graphology";
 
-import { Node } from "../graph/node";
-import { Edge } from "../graph/edge";
+import { Node } from "../graph/graphobjects/node";
+import { Edge } from "../graph/graphobjects/edge";
+import { GraphObject } from "../graph/graphobjects/graph-object";
+
 import { GraphSelection } from "../graph/graph-selection";
 import {
   GeometryOnGraph,
@@ -9,18 +11,6 @@ import {
 } from "../interfaces/graph.interface";
 
 import { Event, GraphEvent, Events } from "../events";
-
-export class GraphObject {
-  graph = Graph.getInstance();
-  public gameObjects: Record<string, GameObjectOnGraph>;
-  public geometries: Record<string, GeometryOnGraph>;
-
-  broadcastToGameObjects(event: Event) {
-    Object.entries(this.gameObjects).forEach(([_, gameObject]) =>
-      gameObject.onEvent(event)
-    );
-  }
-}
 
 // @ts-ignore
 export class Graph extends graphology.Graph {
