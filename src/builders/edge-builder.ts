@@ -13,7 +13,11 @@ import { CurveTypes, CurveForTest, CurveForRender } from "../geometry/curve";
 import { GeometryBuilder } from "../builders/geometry-builder";
 import { NodeBuilder } from "../builders/node-builder";
 
-import { TopRailway, BottomRailway, ShadowRailway } from "../gameobjects/railway";
+import {
+  TopRailway,
+  BottomRailway,
+  ShadowRailway,
+} from "../gameobjects/railway";
 
 import { MainScene } from "../scenes/main-scene";
 
@@ -25,7 +29,7 @@ export enum EdgeGeometries {
 export enum EdgeGameObjects {
   RAILWAY__TOP,
   RAILWAY__BOTTOM,
-	RAILWAY__SHADOW,
+  RAILWAY__SHADOW,
 }
 
 export class EdgeBuilder {

@@ -1,11 +1,9 @@
 import {
   GameObjectOnGraph,
   GeometryOnGraph,
-	GraphParentElement
+  GraphParentElement,
 } from "../interfaces/graph.interface";
-import {
-	GraphObject
-} from "../graph/graph";
+import { GraphObject } from "../graph/graph";
 
 export class Node extends GraphObject implements GraphParentElement {
   constructor(
@@ -13,8 +11,8 @@ export class Node extends GraphObject implements GraphParentElement {
     public gameObjects: Record<string, GameObjectOnGraph>,
     public geometries: Record<string, GeometryOnGraph>
   ) {
-	super();
-	}
+    super();
+  }
 
   broadcastToGameObjects(event: number) {
     Object.entries(this.gameObjects).forEach(([_, gameObject]) =>
@@ -22,7 +20,7 @@ export class Node extends GraphObject implements GraphParentElement {
     );
   }
 
-	broadcastToNeighbourNodes(event: number){
-		throw "NotImplemented";
-	}
+  broadcastToNeighbourNodes(event: number) {
+    throw "NotImplemented";
+  }
 }

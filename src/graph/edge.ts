@@ -2,9 +2,9 @@ import { Node } from "../graph/node";
 import {
   GameObjectOnGraph,
   GeometryOnGraph,
-	GraphParentElement
+  GraphParentElement,
 } from "../interfaces/graph.interface";
-import {  GraphObject } from "../graph/graph";
+import { GraphObject } from "../graph/graph";
 
 export class Edge extends GraphObject implements GraphParentElement {
   public name: string;
@@ -14,7 +14,7 @@ export class Edge extends GraphObject implements GraphParentElement {
     public gameObjects: Record<string, GameObjectOnGraph>,
     public geometries: Record<string, GeometryOnGraph>
   ) {
-		super();
+    super();
     this.name = firstNode.name + "-" + secondNode.name;
   }
 
@@ -22,7 +22,6 @@ export class Edge extends GraphObject implements GraphParentElement {
     this.firstNode.broadcastToGameObjects(event);
     this.secondNode.broadcastToGameObjects(event);
   }
-
 
   update() {
     Object.entries(this.gameObjects).forEach(([_, gameObject]) =>

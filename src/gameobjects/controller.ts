@@ -21,7 +21,7 @@ export class Controller
   valid: boolean = true;
 
   depth: number = 5;
-	imageOffsetY: number = -20;
+  imageOffsetY: number = -20;
 
   populateHandles() {
     this.rightHandle = new Handle(
@@ -29,7 +29,7 @@ export class Controller
       this.pointRightTest,
       this.pointRightRender,
       this.onDrag("rightHandle", "leftHandle"),
-			this.imageOffsetY
+      this.imageOffsetY
     );
     this.add(this.rightHandle, true);
     this.leftHandle = new Handle(
@@ -37,7 +37,7 @@ export class Controller
       this.pointLeftTest,
       this.pointLeftRender,
       this.onDrag("leftHandle", "rightHandle"),
-			this.imageOffsetY
+      this.imageOffsetY
     );
     this.add(this.leftHandle, true);
   }
@@ -48,11 +48,11 @@ export class Controller
     this.add(this.line, true);
     this.controllerCenter = this.create(
       this.pointCenter.x,
-			this.pointCenter.y + this.imageOffsetY,
+      this.pointCenter.y + this.imageOffsetY,
       "controlPointCenter"
     );
     this.setDepth(this.depth);
-		this.setVisible(false);
+    this.setVisible(false);
   }
 
   onDrag(
@@ -81,11 +81,11 @@ export class Controller
       this._setTint(Constants.ERROR_COLOR);
       this.valid = false;
     }
-		if (event == Events.RAILWAY_SELECTED) {
-			this.setVisible(true);
-		}
-		if (event == Events.RAILWAY_DESELECTED) {
-			this.setVisible(false);
-		}
+    if (event == Events.RAILWAY_SELECTED) {
+      this.setVisible(true);
+    }
+    if (event == Events.RAILWAY_DESELECTED) {
+      this.setVisible(false);
+    }
   }
 }

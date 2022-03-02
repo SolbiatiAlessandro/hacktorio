@@ -1,6 +1,9 @@
 import { EdgeBuilder } from "../builders/edge-builder";
 import { NodeBuilder } from "../builders/node-builder";
 import { Graph } from "../graph/graph";
+import { Edge } from "../graph/edge";
+import { Node } from "../graph/node";
+import { Events } from "../events";
 
 export class MainScene extends Phaser.Scene {
   graph: Graph = Graph.getInstance();
@@ -16,6 +19,22 @@ export class MainScene extends Phaser.Scene {
       function (pointer: any, gameObject: any, x: number, y: number) {
         gameObject.onDrag(x, y);
       }
+    );
+    this.input.on(
+      "pointerdown",
+      function (
+        pointer: any,
+        currentlyOver: Array<Phaser.GameObjects.GameObject>
+      ) {
+        if (currentlyOver.length == 0) {
+          this.graph
+            .allEdges()
+            .map((edge: Edge) => edge.broadcast(Events.RAILWAY_DESELECTED));
+          this.graph
+            .allNodes()
+            .map((node: Node) => node.broadcast(Events.RAILWAY_DESELECTED));
+        }
+      }.bind(this)
     );
   }
 
