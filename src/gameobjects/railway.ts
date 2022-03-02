@@ -54,33 +54,63 @@ class Railway
 
 }
 
-const LIFT_OFFSET = -5;
+const LIFT_OFFSET = -2;
 
-export class TopRailway extends Railway {
-  image: string = "rail-top";
-  depth: number = 2;
+class ConcreteRailway extends Railway{
+	yOffset: number = LIFT_OFFSET;
 
 	onEvent(event: number){
 		if (event == Events.RAILWAY_SELECTED){
-			this.yOffset = LIFT_OFFSET;
+			this.yOffset = LIFT_OFFSET * 5;
 		}
 		if (event == Events.RAILWAY_DESELECTED){
-			this.yOffset = 0;
+			this.yOffset = LIFT_OFFSET;
 		}
 	}
 }
 
-export class BottomRailway extends Railway {
+export class TopRailway extends ConcreteRailway {
+  image: string = "rail-top";
+  depth: number = 2;
+
+	onEvent(event: number){
+		super.onEvent(event);
+		if (event == Events.RAILWAY_SELECTED){
+			this.depth = 4;
+		}
+		if (event == Events.RAILWAY_DESELECTED){
+			this.depth = 2;
+		}
+	}
+}
+
+export class BottomRailway extends ConcreteRailway {
   image: string = "rail-bottom";
   depth: number = 1;
   tint: number = Constants.randomColor();
 
 	onEvent(event: number){
+		super.onEvent(event);
 		if (event == Events.RAILWAY_SELECTED){
-			this.yOffset = LIFT_OFFSET;
+			this.depth = 3;
 		}
 		if (event == Events.RAILWAY_DESELECTED){
-			this.yOffset = 0;
+			this.depth = 1;
+		}
+	}
+}
+
+export class ShadowRailway extends Railway{
+  image: string = "rail-bottom";
+	depth: number = 0;
+	tint: number = Constants.SHADOW;
+
+	onEvent(event: number){
+		if (event == Events.RAILWAY_SELECTED){
+			this.depth = 2;
+		}
+		if (event == Events.RAILWAY_DESELECTED){
+			this.depth = 0;
 		}
 	}
 }
