@@ -2,11 +2,11 @@ import { Node } from "../graph/node";
 import {
   GameObjectOnGraph,
   GeometryOnGraph,
-  GraphParentElement,
+	GraphSelectConfig
 } from "../interfaces/graph.interface";
-import { GraphObject } from "../graph/graph";
+import { Graph, GraphObject } from "../graph/graph";
 
-export class Edge extends GraphObject implements GraphParentElement {
+export class Edge extends GraphObject{
   public name: string;
   constructor(
     public firstNode: Node,
@@ -18,10 +18,18 @@ export class Edge extends GraphObject implements GraphParentElement {
     this.name = firstNode.name + "-" + secondNode.name;
   }
 
+	select(config : GraphSelectConfig = {eventForAll: -1}){
+		Graph.getInstance().selectEdge(this, config);
+	}
+
   broadcastToNeighbourNodes(event: number) {
     this.firstNode.broadcastToGameObjects(event);
     this.secondNode.broadcastToGameObjects(event);
   }
+
+	broadcast(event: number){
+		this.broadcastToGameObjects(event);
+	}
 
   update() {
     Object.entries(this.gameObjects).forEach(([_, gameObject]) =>

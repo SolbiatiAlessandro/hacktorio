@@ -9,7 +9,9 @@ import { Constants } from "../../constants";
 import { GameObject } from "../../gameobjects/gameobject";
 import { Rail } from "../../gameobjects/railway/rail";
 
-class GameObjectWithRailwayGeometries
+// set the correct types of object from other domains
+// TODO: think how to get rid of this class and ts-ignores
+class GameObjectWithRailwayTypes
   extends GameObject
   implements GameObjectOnGraph
 {
@@ -18,11 +20,14 @@ class GameObjectWithRailwayGeometries
     return this.graphParentElement.geometries[EdgeGeometries.CURVE__RENDER];
   }
 
-  update() {}
+	get graphParentEdge(): Edge {
+    // @ts-ignore
+		return this.graphParentElement;
+	}
 }
 
 export class AbstractRailway
-  extends GameObjectWithRailwayGeometries
+  extends GameObjectWithRailwayTypes
   implements GameObjectOnGraph
 {
   image: string = "no-image";
@@ -32,10 +37,9 @@ export class AbstractRailway
   yOffset: number = 0;
 
   pointerdown() {
-    this.graphParentElement.broadcastToAllEdges(Events.RAILWAY_DESELECTED);
-    this.graphParentElement.broadcastToAllNodes(Events.RAILWAY_DESELECTED);
-    this.graphParentElement.broadcastToNeighbourNodes(Events.RAILWAY_SELECTED);
-    this.graphParentElement.broadcastToGameObjects(Events.RAILWAY_SELECTED);
+    this.graphParentEdge.select({eventForAll: Events.RAILWAY_DESELECTED});
+    this.graphParentEdge.broadcastToNeighbourNodes(Events.RAILWAY_SELECTED);
+    this.graphParentEdge.broadcastToGameObjects(Events.RAILWAY_SELECTED);
   }
 
   populate() {

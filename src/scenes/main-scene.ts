@@ -27,12 +27,7 @@ export class MainScene extends Phaser.Scene {
         currentlyOver: Array<Phaser.GameObjects.GameObject>
       ) {
         if (currentlyOver.length == 0) {
-          this.graph
-            .allEdges()
-            .map((edge: Edge) => edge.broadcast(Events.RAILWAY_DESELECTED));
-          this.graph
-            .allNodes()
-            .map((node: Node) => node.broadcast(Events.RAILWAY_DESELECTED));
+					this.graph.selectEdge(null, {eventsForAll: Events.RAILWAY_DESELECTED});
         }
       }.bind(this)
     );

@@ -5,6 +5,7 @@ import { Edge } from "../graph/edge";
 import {
   GeometryOnGraph,
   GameObjectOnGraph,
+	GraphSelectConfig
 } from "../interfaces/graph.interface";
 
 export class GraphObject {
@@ -12,23 +13,10 @@ export class GraphObject {
   public gameObjects: Record<string, GameObjectOnGraph>;
   public geometries: Record<string, GeometryOnGraph>;
 
-  broadcastToAllEdges(event: number) {
-    this.graph.allEdges().map((edge: Edge) => edge.broadcast(event));
-  }
-
-  broadcastToAllNodes(event: number) {
-    this.graph.allNodes().map((node: Node) => node.broadcast(event));
-  }
-
   broadcastToGameObjects(event: number) {
     Object.entries(this.gameObjects).forEach(([_, gameObject]) =>
       gameObject.onEvent(event)
     );
-  }
-
-  broadcast(event: number) {
-    this.broadcastToGameObjects(event);
-    //this.broadcastToGeometries(event);
   }
 }
 
@@ -38,6 +26,7 @@ export class Graph extends graphology.Graph {
 
   private readonly NODE: string = "_node";
   private readonly EDGE: string = "_edge";
+
 
   public static getInstance(): Graph {
     if (!Graph.instance) {
@@ -72,6 +61,17 @@ export class Graph extends graphology.Graph {
   allNodes() {
     return super.mapNodes((_: string, attr: any) => attr[this.NODE]);
   }
+
+  broadcastToAllEdges(event: number) {
+    this.allEdges().map((edge: Edge) => edge.broadcast(event));
+  }
+
+	private selectedEdge: Edge = null;
+
+	public selectEdge(edge: Edge, config: GraphSelectConfig){
+		this.selectedEdge = edge;
+		this.broadcastToAllEdges(config.eventForAll);
+	}
 
   update() {
     // later we should update only selected from GraphEvents
