@@ -20,21 +20,24 @@ export class Controller
 
   valid: boolean = true;
 
-  depth: number = 3;
+  depth: number = 5;
+	imageOffsetY: number = -20;
 
   populateHandles() {
     this.rightHandle = new Handle(
       this.scene,
       this.pointRightTest,
       this.pointRightRender,
-      this.onDrag("rightHandle", "leftHandle")
+      this.onDrag("rightHandle", "leftHandle"),
+			this.imageOffsetY
     );
     this.add(this.rightHandle, true);
     this.leftHandle = new Handle(
       this.scene,
       this.pointLeftTest,
       this.pointLeftRender,
-      this.onDrag("leftHandle", "rightHandle")
+      this.onDrag("leftHandle", "rightHandle"),
+			this.imageOffsetY
     );
     this.add(this.leftHandle, true);
   }
@@ -44,7 +47,8 @@ export class Controller
     this.line = new Line(this.scene, this.leftHandle, this.rightHandle);
     this.add(this.line, true);
     this.controllerCenter = this.create(
-      ...this.pointCenter.vector(),
+      this.pointCenter.x,
+			this.pointCenter.y + this.imageOffsetY,
       "controlPointCenter"
     );
     this.setDepth(this.depth);
