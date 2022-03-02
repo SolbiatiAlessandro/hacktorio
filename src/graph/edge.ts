@@ -2,9 +2,11 @@ import { Node } from "../graph/node";
 import {
   GameObjectOnGraph,
   GeometryOnGraph,
+  GraphParentElement,
 } from "../interfaces/graph.interface";
+import { GraphObject } from "../graph/graph";
 
-export class Edge {
+export class Edge extends GraphObject implements GraphParentElement {
   public name: string;
   constructor(
     public firstNode: Node,
@@ -12,12 +14,13 @@ export class Edge {
     public gameObjects: Record<string, GameObjectOnGraph>,
     public geometries: Record<string, GeometryOnGraph>
   ) {
+    super();
     this.name = firstNode.name + "-" + secondNode.name;
   }
 
   broadcastToNeighbourNodes(event: number) {
-    this.firstNode.broadcast(event);
-    this.secondNode.broadcast(event);
+    this.firstNode.broadcastToGameObjects(event);
+    this.secondNode.broadcastToGameObjects(event);
   }
 
   update() {

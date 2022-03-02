@@ -2,6 +2,35 @@ import * as graphology from "graphology";
 
 import { Node } from "../graph/node";
 import { Edge } from "../graph/edge";
+import {
+  GeometryOnGraph,
+  GameObjectOnGraph,
+} from "../interfaces/graph.interface";
+
+export class GraphObject {
+  graph = Graph.getInstance();
+  public gameObjects: Record<string, GameObjectOnGraph>;
+  public geometries: Record<string, GeometryOnGraph>;
+
+  broadcastToAllEdges(event: number) {
+    this.graph.allEdges().map((edge: Edge) => edge.broadcast(event));
+  }
+
+  broadcastToAllNodes(event: number) {
+    this.graph.allNodes().map((node: Node) => node.broadcast(event));
+  }
+
+  broadcastToGameObjects(event: number) {
+    Object.entries(this.gameObjects).forEach(([_, gameObject]) =>
+      gameObject.onEvent(event)
+    );
+  }
+
+  broadcast(event: number) {
+    this.broadcastToGameObjects(event);
+    //this.broadcastToGeometries(event);
+  }
+}
 
 // @ts-ignore
 export class Graph extends graphology.Graph {
@@ -36,8 +65,16 @@ export class Graph extends graphology.Graph {
     return edge.name;
   }
 
+  allEdges() {
+    return super.mapEdges((_: string, attr: any) => attr[this.EDGE]);
+  }
+
+  allNodes() {
+    return super.mapNodes((_: string, attr: any) => attr[this.NODE]);
+  }
+
   update() {
     // later we should update only selected from GraphEvents
-    super.forEachEdge((_: string, attr: any) => attr[this.EDGE].update());
+    this.allEdges().map((edge: Edge) => edge.update());
   }
 }

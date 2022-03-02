@@ -5,19 +5,20 @@ export class Handle extends Phaser.GameObjects.Image {
     scene: Phaser.Scene,
     public point: Point,
     public pointRender: Point, // controls railway rendering
-    public controllerOnDrag: (x: number, y: number) => void
+    public controllerOnDrag: (x: number, y: number) => void,
+    public imageOffsetY: number
   ) {
-    super(scene, point.x, point.y, "controlPoint");
+    super(scene, point.x, point.y + imageOffsetY, "controlPoint");
     this.setInteractive({ draggable: true });
   }
 
   move(x: number, y: number, valid: boolean) {
-    this.setPosition(x, y);
+    this.setPosition(x, y + this.imageOffsetY);
     this.point.setPosition(x, y);
     if (valid) this.pointRender.setPosition(x, y);
   }
 
   onDrag(x: number, y: number) {
-    this.controllerOnDrag(x, y);
+    this.controllerOnDrag(x, y - this.imageOffsetY);
   }
 }

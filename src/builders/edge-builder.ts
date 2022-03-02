@@ -13,7 +13,11 @@ import { CurveTypes, CurveForTest, CurveForRender } from "../geometry/curve";
 import { GeometryBuilder } from "../builders/geometry-builder";
 import { NodeBuilder } from "../builders/node-builder";
 
-import { TopRailway, BottomRailway } from "../gameobjects/railway";
+import {
+  TopRailway,
+  BottomRailway,
+  ShadowRailway,
+} from "../gameobjects/railway";
 
 import { MainScene } from "../scenes/main-scene";
 
@@ -25,6 +29,7 @@ export enum EdgeGeometries {
 export enum EdgeGameObjects {
   RAILWAY__TOP,
   RAILWAY__BOTTOM,
+  RAILWAY__SHADOW,
 }
 
 export class EdgeBuilder {
@@ -54,6 +59,9 @@ export class EdgeBuilder {
     const gameObjects: Record<string, GameObjectOnGraph> = {};
     gameObjects[EdgeGameObjects.RAILWAY__TOP] = new TopRailway(this.scene);
     gameObjects[EdgeGameObjects.RAILWAY__BOTTOM] = new BottomRailway(
+      this.scene
+    );
+    gameObjects[EdgeGameObjects.RAILWAY__SHADOW] = new ShadowRailway(
       this.scene
     );
     return gameObjects;

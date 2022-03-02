@@ -6,6 +6,7 @@ export abstract class Constants {
   static readonly PRIMARY_COLOR: number = 0xffffff;
   static readonly SECONDARY_COLOR: number = 0x403932;
   static readonly ERROR_COLOR: number = 0xff0000;
+  static readonly SHADOW: number = 0x000000;
   static readonly HIGHLIGHT_COLORS: Array<number> = [
     0xff4e02, 0x1ab157, 0xfe86b3, 0x4470e7, 0xfd9a1d,
   ];
