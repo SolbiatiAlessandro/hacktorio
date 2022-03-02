@@ -1,7 +1,9 @@
 import { Point } from "../geometry/point";
+import { Edge } from "../graph/edge";
+import { Events } from "../events";
 
 abstract class Curve extends Phaser.Curves.CubicBezier {
-  graphParentElement: any;
+  graphParentElement: Edge;
 
   segments: number;
   private readonly _LENGTH_SEGMENT_RATIO: number = 15;
@@ -45,9 +47,17 @@ export class CurveForRender extends Curve {
 
 // this is the curve used to test if we have an acceptable curve state after a user edit
 export class CurveForTest extends Curve {
-  broken: boolean = false;
+	broken: boolean = false;
+	private _brokenDistance: boolean = false;
+	private _brokenCurvature: boolean = false;
+	private _cnt: number = 0;
   private readonly BREAKING_DISTANCE_MAX: number = 23;
   private readonly BREAKING_CURVATURE_MAX: number = 0.05;
+
+	changeState(broken: boolean){
+		const event = broken ? Events.CURVE_INVALID : Events.CURVE_VALID;
+		this.graphParentElement.broadcastToNeighbourNodes(event);
+	}
 
   breaksDistance(
     firstPoint: Phaser.Math.Vector2,
@@ -57,7 +67,7 @@ export class CurveForTest extends Curve {
       Phaser.Math.Distance.BetweenPoints(firstPoint, secondPoint) >
       this.BREAKING_DISTANCE_MAX
     ) {
-      this.broken = true;
+      this._brokenDistance = true;
     }
     return secondPoint;
   }
@@ -71,20 +81,27 @@ export class CurveForTest extends Curve {
       typeof c != "undefined" &&
       super.curvature(a, b, c) > this.BREAKING_CURVATURE_MAX
     ) {
-      this.broken = true;
+      this._brokenCurvature = true;
     }
     return b;
   }
 
   update(): void {
     const _points = super.points();
-    this.broken = false;
+    this._brokenDistance = false;
     _points.reduce((previousPoint, currentPoint) =>
       this.breaksDistance(previousPoint, currentPoint)
     );
+    this._brokenCurvature = false;
     _points.reduce((previousPoint, currentPoint, index, points) =>
       this.breaksCurvature(previousPoint, currentPoint, _points[index + 1])
     );
+		const newState = this._brokenDistance || this._brokenCurvature;
+		if (newState != this.broken){
+			this.changeState(newState);
+		}
+		this.broken = newState;
+
   }
 }
 

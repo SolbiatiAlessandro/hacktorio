@@ -1,4 +1,5 @@
 import { Constants } from "../constants";
+import { Events } from "../events";
 
 import { MainScene } from "../scenes/main-scene";
 
@@ -96,5 +97,18 @@ export class Controller
     }.bind(this);
   }
 
-  update() {}
+	tint(color: number){
+		this.rightHandle.setTint(color);
+		this.leftHandle.setTint(color);
+	}
+
+	onEvent(event: number){
+		if ( event ==  Events.CURVE_VALID ){
+			this.tint(Constants.PRIMARY_COLOR);
+		}
+		if ( event ==  Events.CURVE_INVALID ){
+			this.tint(Constants.ERROR_COLOR);
+		}
+	}
+
 }
