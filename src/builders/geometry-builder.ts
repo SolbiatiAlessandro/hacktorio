@@ -1,4 +1,4 @@
-import { Node } from "../graph/node";
+import { Node } from "../graph/graphobjects/node";
 import { Point } from "../geometry/point";
 import { CurveTypes, CurveForRender, CurveForTest } from "../geometry/curve";
 

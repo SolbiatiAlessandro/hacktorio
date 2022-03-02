@@ -1,5 +1,5 @@
-import { Edge } from "../graph/edge";
-import { Node } from "../graph/node";
+import { Edge } from "../graph/graphobjects/edge";
+import { Node } from "../graph/graphobjects/node";
 import { Event } from "../events";
 
 export class GameObject extends Phaser.GameObjects.Group {

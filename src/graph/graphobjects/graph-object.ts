@@ -5,7 +5,7 @@ import {
 } from "../../interfaces/graph.interface";
 import { Event, GraphEvent, Events } from "../../events";
 
-export class GraphObject {
+export abstract class GraphObject {
   graph = Graph.getInstance();
   public gameObjects: Record<string, GameObjectOnGraph>;
   public geometries: Record<string, GeometryOnGraph>;

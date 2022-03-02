@@ -1,4 +1,4 @@
-import { Edge } from "../../graph/edge";
+import { Edge } from "../../graph/graphobjects/edge";
 import { EdgeGeometries } from "../../builders/edge-builder";
 import { CurveForRender } from "../../geometry/curve";
 

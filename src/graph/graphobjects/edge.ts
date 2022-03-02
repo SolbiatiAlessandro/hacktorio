@@ -8,12 +8,15 @@ import { GraphSelection } from "../../graph/graph-selection";
 
 import { GraphObject } from "../../graph/graphobjects/graph-object";
 import { Node } from "../../graph/graphobjects/node";
+import { GraphSelectionObject } from "../../graph/graphobjects/graph-selection-object";
 
 import { GraphEvent, Event, Events } from "../../events";
 
-export class Edge extends GraphObject {
+export class Edge extends GraphSelectionObject {
   public name: string;
-	graphSelection: GraphSelection = Graph.getInstance().graphSelection;
+	readonly SELECTION_EVENTS: Array<Event> = 
+		[Events.EDGE_DESELECTED, Events.EDGE_SELECTED];
+	graph: Graph = Graph.getInstance();
 
   constructor(
     public firstNode: Node,
@@ -27,23 +30,6 @@ export class Edge extends GraphObject {
 
 	neighbouringNodes(): [Node, Node]{
 		return [this.firstNode, this.secondNode];
-	}
-
-  select() {
-    this.graphSelection.selectEdge(this);
-  }
-
-	deselect(){
-		this.graphSelection.deselectEdge(this);
-	}
-
-	private readonly EVENTS: Array<Event> = 
-		[Events.EDGE_DESELECTED, Events.EDGE_SELECTED];
-
-	on(event: GraphEvent){
-		if (this.EVENTS.includes(event)){
-			this.broadcastToGameObjects(event);
-		}
 	}
 
 	selectNeighbourNodes(){

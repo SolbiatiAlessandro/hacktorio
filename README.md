@@ -189,3 +189,8 @@ git commit --allow-empty  (feature ideas descriptions)
 git log --graph --decorate --oneline --all
 prettier --write .
 ```
+
+Some useful bash commands
+```
+rg "\{ Edge \}" -l | xargs sed -i '' 's/graph\/edge/graph\/graphobjects\/edge/g'
+```

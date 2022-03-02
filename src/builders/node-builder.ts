@@ -1,4 +1,4 @@
-import { Node } from "../graph/node";
+import { Node } from "../graph/graphobjects/node";
 import { Graph } from "../graph/graph";
 
 import {

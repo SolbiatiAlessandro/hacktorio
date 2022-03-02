@@ -4,13 +4,14 @@ import { Node } from "../graph/graphobjects/node";
 import { Edge } from "../graph/graphobjects/edge";
 import { GraphObject } from "../graph/graphobjects/graph-object";
 
-import { GraphSelection } from "../graph/graph-selection";
+import { GraphSelection, GraphSelectionState } from "../graph/graph-selection";
 import {
   GeometryOnGraph,
   GameObjectOnGraph,
 } from "../interfaces/graph.interface";
 
 import { Event, GraphEvent, Events } from "../events";
+
 
 // @ts-ignore
 export class Graph extends graphology.Graph {
@@ -19,7 +20,7 @@ export class Graph extends graphology.Graph {
   private readonly NODE: string = "_node";
   private readonly EDGE: string = "_edge";
 
-	public graphSelection = new GraphSelection();
+	public graphSelectionState = new GraphSelectionState();
 
   public static getInstance(): Graph {
     if (!Graph.instance) {

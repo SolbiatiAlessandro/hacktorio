@@ -1,5 +1,5 @@
-import { Node } from "../graph/node";
-import { Edge } from "../graph/edge";
+import { Node } from "../graph/graphobjects/node";
+import { Edge } from "../graph/graphobjects/edge";
 import { Event }  from "../events";
 
 export interface GameObjectOnGraph {

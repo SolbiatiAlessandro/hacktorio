@@ -1,8 +1,9 @@
 import { EdgeBuilder } from "../builders/edge-builder";
 import { NodeBuilder } from "../builders/node-builder";
-import { Graph, GraphSelection } from "../graph/graph";
-import { Edge } from "../graph/edge";
-import { Node } from "../graph/node";
+import { Graph } from "../graph/graph";
+import { GraphSelection } from "../graph/graph-selection";
+import { Edge } from "../graph/graphobjects/edge";
+import { Node } from "../graph/graphobjects/node";
 import { Events } from "../events";
 
 export class MainScene extends Phaser.Scene {
@@ -27,7 +28,7 @@ export class MainScene extends Phaser.Scene {
         currentlyOver: Array<Phaser.GameObjects.GameObject>
       ) {
         if (currentlyOver.length == 0) {
-					this.graph.graphSelection.emptySelection();
+					GraphSelection.emptySelection();
         }
       }.bind(this)
     );

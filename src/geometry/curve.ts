@@ -1,5 +1,5 @@
 import { Point } from "../geometry/point";
-import { Edge } from "../graph/edge";
+import { Edge } from "../graph/graphobjects/edge";
 import { Events } from "../events";
 
 abstract class Curve extends Phaser.Curves.CubicBezier {

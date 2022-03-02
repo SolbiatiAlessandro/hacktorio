@@ -1,7 +1,7 @@
 import { GameObject } from "../../gameobjects/gameobject";
 import { NodeGeometries } from "../../builders/node-builder";
 import { Point } from "../../geometry/point";
-import { Node } from "../../graph/node"; 
+import { Node } from "../../graph/graphobjects/node"; 
 
 export class GameObjectWithControllerTypes extends GameObject {
 	get graphParentNode(): Node {
