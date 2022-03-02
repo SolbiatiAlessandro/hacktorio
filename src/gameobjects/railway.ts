@@ -32,9 +32,15 @@ class Railway
     this._curve()
       .pointsWithTangents()
       .forEach(([point, tangent], index) => {
-				const rail = new Rail( this.scene, point, this.image, this.tint, tangent);
+        const rail = new Rail(
+          this.scene,
+          point,
+          this.image,
+          this.tint,
+          tangent
+        );
         this.rails.push(rail);
-				this.add(rail, true);
+        this.add(rail, true);
       });
   }
 
