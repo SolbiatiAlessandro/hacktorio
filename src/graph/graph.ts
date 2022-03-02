@@ -5,7 +5,7 @@ import { Edge } from "../graph/edge";
 import {
   GeometryOnGraph,
   GameObjectOnGraph,
-	GraphSelectConfig
+  GraphSelectConfig,
 } from "../interfaces/graph.interface";
 
 export class GraphObject {
@@ -26,7 +26,6 @@ export class Graph extends graphology.Graph {
 
   private readonly NODE: string = "_node";
   private readonly EDGE: string = "_edge";
-
 
   public static getInstance(): Graph {
     if (!Graph.instance) {
@@ -66,12 +65,12 @@ export class Graph extends graphology.Graph {
     this.allEdges().map((edge: Edge) => edge.broadcast(event));
   }
 
-	private selectedEdge: Edge = null;
+  private selectedEdge: Edge = null;
 
-	public selectEdge(edge: Edge, config: GraphSelectConfig){
-		this.selectedEdge = edge;
-		this.broadcastToAllEdges(config.eventForAll);
-	}
+  public selectEdge(edge: Edge, config: GraphSelectConfig) {
+    this.selectedEdge = edge;
+    this.broadcastToAllEdges(config.eventForAll);
+  }
 
   update() {
     // later we should update only selected from GraphEvents

@@ -2,7 +2,7 @@ import { Node } from "../graph/node";
 import { Edge } from "../graph/edge";
 
 export interface GraphSelectConfig {
-	eventForAll: number; // broadcast to all edges, e.g. eventForAll = deselect
+  eventForAll: number; // broadcast to all edges, e.g. eventForAll = deselect
 }
 
 export interface GameObjectOnGraph {

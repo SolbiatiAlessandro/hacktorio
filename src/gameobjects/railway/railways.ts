@@ -1,11 +1,11 @@
-import { AbstractRailway } from "../../gameobjects/railway/abstract-railway"
+import { AbstractRailway } from "../../gameobjects/railway/abstract-railway";
 
-import { Events } from "../../events"
-import { Constants } from "../../constants"
+import { Events } from "../../events";
+import { Constants } from "../../constants";
 
 class RenderedRailway extends AbstractRailway {
-	private readonly OFFSET_DOWN = -2;
-	private readonly OFFSET_UP = -10;
+  private readonly OFFSET_DOWN = -2;
+  private readonly OFFSET_UP = -10;
   yOffset: number = this.OFFSET_DOWN;
 
   onEvent(event: number) {

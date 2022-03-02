@@ -20,10 +20,10 @@ class GameObjectWithRailwayTypes
     return this.graphParentElement.geometries[EdgeGeometries.CURVE__RENDER];
   }
 
-	get graphParentEdge(): Edge {
+  get graphParentEdge(): Edge {
     // @ts-ignore
-		return this.graphParentElement;
-	}
+    return this.graphParentElement;
+  }
 }
 
 export class AbstractRailway
@@ -37,7 +37,7 @@ export class AbstractRailway
   yOffset: number = 0;
 
   pointerdown() {
-    this.graphParentEdge.select({eventForAll: Events.RAILWAY_DESELECTED});
+    this.graphParentEdge.select({ eventForAll: Events.RAILWAY_DESELECTED });
     this.graphParentEdge.broadcastToNeighbourNodes(Events.RAILWAY_SELECTED);
     this.graphParentEdge.broadcastToGameObjects(Events.RAILWAY_SELECTED);
   }
