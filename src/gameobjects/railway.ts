@@ -11,7 +11,7 @@ class GameObjectWithRailwayGeometries
   extends GameObject
   implements GameObjectOnGraph
 {
-  _curve(): CurveForRender {
+  get curve(): CurveForRender {
     // @ts-ignore
     return this.graphParentElement.geometries[EdgeGeometries.CURVE__RENDER];
   }
@@ -29,27 +29,17 @@ class Railway
   rails: Array<Rail> = [];
 
   populate() {
-    this._curve()
-      .pointsWithTangents()
-      .forEach(([point, tangent], index) => {
-        const rail = new Rail(
-          this.scene,
-          point,
-          this.image,
-          this.tint,
-          tangent
-        );
-        this.rails.push(rail);
-        this.add(rail, true);
-      });
+    this.curve.pointsWithTangents().forEach(([point, tangent], index) => {
+      const rail = new Rail(this.scene, point, this.image, this.tint, tangent);
+      this.rails.push(rail);
+      this.add(rail, true);
+    });
   }
 
   update() {
-    this._curve()
-      .pointsWithTangents()
-      .forEach(([point, tangent], index) => {
-        this.rails[index].update(point, tangent);
-      });
+    this.curve.pointsWithTangents().forEach(([point, tangent], index) => {
+      this.rails[index].update(point, tangent);
+    });
     this.setDepth(this.depth);
   }
 }
