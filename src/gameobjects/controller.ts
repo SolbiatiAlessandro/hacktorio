@@ -25,14 +25,28 @@ class GameObjectWithControllerGeometries
     return this.graphParentElement.geometries[NodeGeometries.POINT__CENTER];
   }
 
-  get pointLeft(): Point {
+  get pointLeftTest(): Point {
+    //@ts-ignore
+    return this.graphParentElement.geometries[
+      NodeGeometries.POINT__LEFT_HANDLE_TEST
+    ];
+  }
+
+  get pointLeftRender(): Point {
     //@ts-ignore
     return this.graphParentElement.geometries[
       NodeGeometries.POINT__LEFT_HANDLE
     ];
   }
 
-  get pointRight(): Point {
+  get pointRightTest(): Point {
+    //@ts-ignore
+    return this.graphParentElement.geometries[
+      NodeGeometries.POINT__RIGHT_HANDLE_TEST
+    ];
+  }
+
+  get pointRightRender(): Point {
     //@ts-ignore
     return this.graphParentElement.geometries[
       NodeGeometries.POINT__RIGHT_HANDLE
@@ -51,20 +65,22 @@ export class Controller
   leftHandle: Handle;
   line: Line;
 
-	valid: boolean = true;
+  valid: boolean = true;
 
   depth: number = 3;
 
   populateHandles() {
     this.rightHandle = new Handle(
       this.scene,
-      this.pointRight,
+      this.pointRightTest,
+      this.pointRightRender,
       this.onDrag("rightHandle", "leftHandle")
     );
     this.add(this.rightHandle, true);
     this.leftHandle = new Handle(
       this.scene,
-      this.pointLeft,
+      this.pointLeftTest,
+      this.pointLeftRender,
       this.onDrag("leftHandle", "rightHandle")
     );
     this.add(this.leftHandle, true);
@@ -86,36 +102,26 @@ export class Controller
     otherHandle: "rightHandle" | "leftHandle"
   ): (x: number, y: number) => void {
     return function (x: number, y: number) {
-      this[handle].setPosition(x, y);
-      this[otherHandle].setPosition(...this.pointCenter.reflectBy(x, y));
-			if(this.valid){
-				this[handle].point.setPosition(x, y);
-				this[otherHandle].point.setPosition(...this.pointCenter.reflectBy(x, y));
-			}
-      this.line.setTo(
-        this[handle].x,
-        this[handle].y,
-        this[otherHandle].x,
-        this[otherHandle].y
-      );
+      this[handle].move(x, y, this.valid);
+      this[otherHandle].move(...this.pointCenter.reflectBy(x, y), this.valid);
+      this.line.move(this[handle], this[otherHandle]);
     }.bind(this);
   }
 
-	tint(color: number){
-		this.rightHandle.setTint(color);
-		this.leftHandle.setTint(color);
-		this.line.setStrokeStyle(0.5, color, 1);
-	}
+  _setTint(color: number) {
+    this.rightHandle.setTint(color);
+    this.leftHandle.setTint(color);
+    this.line.setTint(color);
+  }
 
-	onEvent(event: number){
-		if ( event ==  Events.CURVE_VALID ){
-			this.tint(Constants.PRIMARY_COLOR);
-			this.valid = true;
-		}
-		if ( event ==  Events.CURVE_INVALID ){
-			this.tint(Constants.ERROR_COLOR);
-			this.valid = false;
-		}
-	}
-
+  onEvent(event: number) {
+    if (event == Events.CURVE_VALID) {
+      this._setTint(Constants.PRIMARY_COLOR);
+      this.valid = true;
+    }
+    if (event == Events.CURVE_INVALID) {
+      this._setTint(Constants.ERROR_COLOR);
+      this.valid = false;
+    }
+  }
 }

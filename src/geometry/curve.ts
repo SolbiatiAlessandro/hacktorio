@@ -47,17 +47,17 @@ export class CurveForRender extends Curve {
 
 // this is the curve used to test if we have an acceptable curve state after a user edit
 export class CurveForTest extends Curve {
-	broken: boolean = false;
-	private _brokenDistance: boolean = false;
-	private _brokenCurvature: boolean = false;
-	private _cnt: number = 0;
+  broken: boolean = false;
+  private _brokenDistance: boolean = false;
+  private _brokenCurvature: boolean = false;
+  private _cnt: number = 0;
   private readonly BREAKING_DISTANCE_MAX: number = 23;
   private readonly BREAKING_CURVATURE_MAX: number = 0.05;
 
-	changeState(broken: boolean){
-		const event = broken ? Events.CURVE_INVALID : Events.CURVE_VALID;
-		this.graphParentElement.broadcastToNeighbourNodes(event);
-	}
+  changeState(broken: boolean) {
+    const event = broken ? Events.CURVE_INVALID : Events.CURVE_VALID;
+    this.graphParentElement.broadcastToNeighbourNodes(event);
+  }
 
   breaksDistance(
     firstPoint: Phaser.Math.Vector2,
@@ -96,12 +96,11 @@ export class CurveForTest extends Curve {
     _points.reduce((previousPoint, currentPoint, index, points) =>
       this.breaksCurvature(previousPoint, currentPoint, _points[index + 1])
     );
-		const newState = this._brokenDistance || this._brokenCurvature;
-		if (newState != this.broken){
-			this.changeState(newState);
-		}
-		this.broken = newState;
-
+    const newState = this._brokenDistance || this._brokenCurvature;
+    if (newState != this.broken) {
+      this.changeState(newState);
+    }
+    this.broken = newState;
   }
 }
 

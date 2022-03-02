@@ -10,9 +10,9 @@ export class Node {
     public geometries: Record<string, GeometryOnGraph>
   ) {}
 
-	broadcast(event: number){
+  broadcast(event: number) {
     Object.entries(this.gameObjects).forEach(([_, gameObject]) =>
       gameObject.onEvent(event)
     );
-	}
+  }
 }

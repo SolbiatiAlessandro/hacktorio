@@ -16,7 +16,7 @@ export class GameObject extends Phaser.GameObjects.Group {
   // here this.graphParentElement has been set
   populate() {}
 
-	onEvent(event: number){}
+  onEvent(event: number) {}
 
-	update(){}
+  update() {}
 }

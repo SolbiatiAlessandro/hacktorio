@@ -18,6 +18,8 @@ export enum NodeGeometries {
   POINT__CENTER,
   POINT__LEFT_HANDLE,
   POINT__RIGHT_HANDLE,
+  POINT__LEFT_HANDLE_TEST,
+  POINT__RIGHT_HANDLE_TEST,
 }
 
 export enum NodeGameObjects {
@@ -28,13 +30,29 @@ export class NodeBuilder {
   graph: Graph = Graph.getInstance();
   geometryBuilder: GeometryBuilder = new GeometryBuilder();
 
+  private readonly HANDLE_OFFSET = 60;
+
   constructor(public scene: MainScene) {}
 
   buildGeometries(x: number, y: number): Record<string, GeometryOnGraph> {
     const geometries: Record<string, GeometryOnGraph> = {};
     geometries[NodeGeometries.POINT__CENTER] = new Point(x, y);
-    geometries[NodeGeometries.POINT__LEFT_HANDLE] = new Point(x - 50, y - 50);
-    geometries[NodeGeometries.POINT__RIGHT_HANDLE] = new Point(x + 50, y + 50);
+    geometries[NodeGeometries.POINT__LEFT_HANDLE] = new Point(
+      x - this.HANDLE_OFFSET,
+      y - this.HANDLE_OFFSET
+    );
+    geometries[NodeGeometries.POINT__RIGHT_HANDLE] = new Point(
+      x + this.HANDLE_OFFSET,
+      y + this.HANDLE_OFFSET
+    );
+    geometries[NodeGeometries.POINT__LEFT_HANDLE_TEST] = new Point(
+      x - this.HANDLE_OFFSET,
+      y - this.HANDLE_OFFSET
+    );
+    geometries[NodeGeometries.POINT__RIGHT_HANDLE_TEST] = new Point(
+      x + this.HANDLE_OFFSET,
+      y + this.HANDLE_OFFSET
+    );
     return geometries;
   }
 

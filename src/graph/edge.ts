@@ -15,10 +15,10 @@ export class Edge {
     this.name = firstNode.name + "-" + secondNode.name;
   }
 
-	broadcastToNeighbourNodes(event: number){
-		this.firstNode.broadcast(event);
-		this.secondNode.broadcast(event);
-	}
+  broadcastToNeighbourNodes(event: number) {
+    this.firstNode.broadcast(event);
+    this.secondNode.broadcast(event);
+  }
 
   update() {
     Object.entries(this.gameObjects).forEach(([_, gameObject]) =>
