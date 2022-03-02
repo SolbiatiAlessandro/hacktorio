@@ -2,7 +2,8 @@ import {
   GameObjectOnGraph,
   GeometryOnGraph,
 } from "../interfaces/graph.interface";
-import { Graph, GraphSelection, GraphObject } from "../graph/graph";
+import { Graph, GraphObject } from "../graph/graph";
+import { GraphSelection } from "../graph/graph-selection";
 import { Event, GraphEvent, Events } from "../events";
 
 export class Node extends GraphObject {

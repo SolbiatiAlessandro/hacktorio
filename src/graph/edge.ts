@@ -3,8 +3,9 @@ import {
   GameObjectOnGraph,
   GeometryOnGraph,
 } from "../interfaces/graph.interface";
-import { Graph, GraphObject, GraphSelection } from "../graph/graph";
+import { Graph, GraphObject } from "../graph/graph";
 import { GraphEvent, Event, Events } from "../events";
+import { GraphSelection } from "../graph/graph-selection";
 
 export class Edge extends GraphObject {
   public name: string;
