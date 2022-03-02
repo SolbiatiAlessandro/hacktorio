@@ -1,60 +1,13 @@
 import { Constants } from "../constants";
 import { Events } from "../events";
 
-import { MainScene } from "../scenes/main-scene";
-
-import { Node } from "../graph/node";
-
 import { Point } from "../geometry/point";
-
-import { NodeGeometries } from "../builders/node-builder";
 
 import { GameObjectOnGraph } from "../interfaces/graph.interface";
 
-import { GameObject } from "../gameobjects/gameobject";
-
 import { Handle } from "../gameobjects/controller/handle";
 import { Line } from "../gameobjects/controller/line";
-
-class GameObjectWithControllerGeometries
-  extends GameObject
-  implements GameObjectOnGraph
-{
-  get pointCenter(): Point {
-    //@ts-ignore
-    return this.graphParentElement.geometries[NodeGeometries.POINT__CENTER];
-  }
-
-  get pointLeftTest(): Point {
-    //@ts-ignore
-    return this.graphParentElement.geometries[
-      NodeGeometries.POINT__LEFT_HANDLE_TEST
-    ];
-  }
-
-  get pointLeftRender(): Point {
-    //@ts-ignore
-    return this.graphParentElement.geometries[
-      NodeGeometries.POINT__LEFT_HANDLE
-    ];
-  }
-
-  get pointRightTest(): Point {
-    //@ts-ignore
-    return this.graphParentElement.geometries[
-      NodeGeometries.POINT__RIGHT_HANDLE_TEST
-    ];
-  }
-
-  get pointRightRender(): Point {
-    //@ts-ignore
-    return this.graphParentElement.geometries[
-      NodeGeometries.POINT__RIGHT_HANDLE
-    ];
-  }
-
-  update() {}
-}
+import { GameObjectWithControllerGeometries } from "../gameobjects/controller/controller-geometries";
 
 export class Controller
   extends GameObjectWithControllerGeometries
