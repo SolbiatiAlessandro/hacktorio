@@ -3,7 +3,9 @@ import { Edge } from "../graph/edge";
 import { EdgeGeometries } from "../builders/edge-builder";
 import { CurveForRender } from "../geometry/curve";
 import { Constants } from "../constants";
+
 import { GameObject } from "../gameobjects/gameobject";
+import { Rail } from "../gameobjects/railway/rail";
 
 class GameObjectWithRailwayGeometries
   extends GameObject
@@ -17,14 +19,6 @@ class GameObjectWithRailwayGeometries
   update() {}
 }
 
-function rotateRail(
-  rail: Phaser.GameObjects.Sprite,
-  tangent: Phaser.Math.Vector2
-) {
-  rail.rotation =
-    Phaser.Math.Angle.Between(0, 0, tangent.x, tangent.y) + Phaser.Math.PI2 / 4;
-}
-
 class Railway
   extends GameObjectWithRailwayGeometries
   implements GameObjectOnGraph
@@ -32,22 +26,15 @@ class Railway
   image: string = "no-image";
   tint: number = Constants.PRIMARY_COLOR;
   depth: number = 0;
-  rails: Array<Phaser.GameObjects.Sprite> = [];
+  rails: Array<Rail> = [];
 
   populate() {
     this._curve()
       .pointsWithTangents()
       .forEach(([point, tangent], index) => {
-        const rail = this.getFirstDead(true, point.x, point.y, this.image);
-        // TODO: on click broadcast event, let curve listen and check if it's broken
-        // or not and let the curve emit a CURVE_VALID/CURVE_INVALID event
-        rail.setTint(this.tint);
-        rotateRail(rail, tangent);
-
-        rail.displayHeight = 32;
-        rail.displayWidth = 64;
-        rail.setScale(0.5);
+				const rail = new Rail( this.scene, point, this.image, this.tint, tangent);
         this.rails.push(rail);
+				this.add(rail, true);
       });
   }
 
@@ -55,9 +42,7 @@ class Railway
     this._curve()
       .pointsWithTangents()
       .forEach(([point, tangent], index) => {
-        const rail = this.rails[index];
-        rail.setPosition(point.x, point.y);
-        rotateRail(rail, tangent);
+        this.rails[index].update(point, tangent);
       });
     this.setDepth(this.depth);
   }
