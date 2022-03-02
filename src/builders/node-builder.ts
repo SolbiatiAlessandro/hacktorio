@@ -12,7 +12,7 @@ import { GeometryBuilder } from "../builders/geometry-builder";
 
 import { MainScene } from "../scenes/main-scene";
 
-import { Controller } from "../gameobjects/controller";
+import { Controller } from "../gameobjects/controller/controller";
 
 export enum NodeGeometries {
   POINT__CENTER,
