@@ -51,6 +51,8 @@ export class Controller
   leftHandle: Handle;
   line: Line;
 
+	valid: boolean = true;
+
   depth: number = 3;
 
   populateHandles() {
@@ -85,9 +87,11 @@ export class Controller
   ): (x: number, y: number) => void {
     return function (x: number, y: number) {
       this[handle].setPosition(x, y);
-      this[handle].point.setPosition(x, y);
       this[otherHandle].setPosition(...this.pointCenter.reflectBy(x, y));
-      this[otherHandle].point.setPosition(...this.pointCenter.reflectBy(x, y));
+			if(this.valid){
+				this[handle].point.setPosition(x, y);
+				this[otherHandle].point.setPosition(...this.pointCenter.reflectBy(x, y));
+			}
       this.line.setTo(
         this[handle].x,
         this[handle].y,
@@ -100,14 +104,17 @@ export class Controller
 	tint(color: number){
 		this.rightHandle.setTint(color);
 		this.leftHandle.setTint(color);
+		this.line.setStrokeStyle(0.5, color, 1);
 	}
 
 	onEvent(event: number){
 		if ( event ==  Events.CURVE_VALID ){
 			this.tint(Constants.PRIMARY_COLOR);
+			this.valid = true;
 		}
 		if ( event ==  Events.CURVE_INVALID ){
 			this.tint(Constants.ERROR_COLOR);
+			this.valid = false;
 		}
 	}
 

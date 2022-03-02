@@ -39,6 +39,8 @@ class Railway
       .pointsWithTangents()
       .forEach(([point, tangent], index) => {
         const rail = this.getFirstDead(true, point.x, point.y, this.image);
+				// TODO: on click broadcast event, let curve listen and check if it's broken 
+				// or not and let the curve emit a CURVE_VALID/CURVE_INVALID event
         rail.setTint(this.tint);
         rotateRail(rail, tangent);
 
