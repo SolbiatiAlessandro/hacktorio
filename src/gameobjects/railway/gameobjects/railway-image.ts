@@ -1,4 +1,4 @@
-export class Rail extends Phaser.GameObjects.Sprite {
+export class RailwayImage extends Phaser.GameObjects.Image {
   constructor(
     scene: Phaser.Scene,
     point: Phaser.Math.Vector2,

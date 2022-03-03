@@ -5,8 +5,8 @@ import { Point } from "../../geometry/point";
 
 import { GameObjectOnGraph } from "../../interfaces/graph.interface";
 
-import { ControllerHandle } from "../../gameobjects/controller/controller-handle";
-import { ControllerLine } from "../../gameobjects/controller/controller-line";
+import { ControllerHandle } from "../../gameobjects/controller/gameobjects/controller-handle";
+import { ControllerLine } from "../../gameobjects/controller/gameobjects/controller-line";
 import { GameObjectWithControllerTypes } from "../../gameobjects/controller/controller-geometries";
 
 export class Controller

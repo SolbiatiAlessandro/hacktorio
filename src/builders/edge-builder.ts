@@ -17,7 +17,7 @@ import {
   TopRailway,
   BottomRailway,
   ShadowRailway,
-} from "../gameobjects/railway/railways";
+} from "../gameobjects/railway/railway";
 
 import { MainScene } from "../scenes/main-scene";
 

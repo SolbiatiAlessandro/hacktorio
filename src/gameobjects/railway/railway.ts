@@ -4,7 +4,7 @@ import { GameObjectOnGraph } from "../../interfaces/graph.interface";
 import {
   RailwayWithChangingDepth,
   RailwayWithChangingOffsetAndDepth,
-} from "../../gameobjects/railway/abstract-railways";
+} from "../../gameobjects/railway/abstract-railway";
 
 export class TopRailway
   extends RailwayWithChangingOffsetAndDepth

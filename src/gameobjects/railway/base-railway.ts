@@ -5,7 +5,7 @@ import { CurveForRender } from "../../geometry/curve";
 import { Constants } from "../../constants";
 
 import { GameObject } from "../../gameobjects/gameobject";
-import { Rail } from "../../gameobjects/railway/rail";
+import { RailwayImage } from "../../gameobjects/railway/gameobjects/railway-image";
 
 // set the correct types of object from other domains
 // TODO: think how to get rid of this class and ts-ignores
@@ -25,7 +25,7 @@ export class BaseRailway extends GameObjectWithRailwayTypes {
   image: string = "no-image";
   tint: number = Constants.PRIMARY_COLOR;
   depth: number = 0;
-  rails: Array<Rail> = [];
+  rails: Array<RailwayImage> = [];
   yOffset: number = 0;
 
   pointerdown() {
@@ -34,7 +34,7 @@ export class BaseRailway extends GameObjectWithRailwayTypes {
 
   populate() {
     this.curve.pointsWithTangents().forEach(([point, tangent], index) => {
-      const rail = new Rail(
+      const rail = new RailwayImage(
         this.scene,
         point,
         this.image,

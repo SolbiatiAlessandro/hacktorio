@@ -1,6 +1,6 @@
-import { Constants } from "../../constants";
+import { Constants } from "../../../constants";
 
-import { ControllerHandle } from "../../gameobjects/controller/controller-handle";
+import { ControllerHandle } from "../../../gameobjects/controller/gameobjects/controller-handle";
 
 export class ControllerLine extends Phaser.GameObjects.Line {
   constructor(
