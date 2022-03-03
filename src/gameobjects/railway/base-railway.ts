@@ -9,21 +9,8 @@ import { RailwayImage } from "../../gameobjects/railway/gameobjects/railway-imag
 
 import { Event } from "../../events";
 
-// set the correct types of object from other domains
-// TODO: think how to get rid of this class and ts-ignores
-class GameObjectWithRailwayTypes extends GameObject {
-  get curve(): CurveForRender {
-    // @ts-ignore
-    return this.graphParentElement.geometries[EdgeGeometries.CURVE__RENDER];
-  }
 
-  get graphParentEdge(): Edge {
-    // @ts-ignore
-    return this.graphParentElement;
-  }
-}
-
-export class BaseRailway extends GameObjectWithRailwayTypes {
+export class BaseRailway extends GameObject {
   image: string = "no-image";
   tint: number = Constants.PRIMARY_COLOR;
   depth: number = 0;
@@ -31,8 +18,13 @@ export class BaseRailway extends GameObjectWithRailwayTypes {
   yOffset: number = 0;
 
   pointerdown() {
-    this.graphParentEdge.select();
+    this.graphParentElement.select();
   }
+
+	get curve(){
+		const graphParentEdge: Edge = this.graphParentElement;
+		return graphParentEdge.geometriesOnEdge.curve;
+	}
 
   populate() {
     this.curve.pointsWithTangents().forEach(([point, tangent], index) => {
