@@ -7,9 +7,25 @@ import { Event, GraphEvent, Events } from "../events";
 
 
 export class GraphSelectionState{
-	selectedEdge: Edge = null;
+	activeEdges: Array<Edge> = [];
+	selectionChanged: boolean = true;
+	_selectedEdge: Edge = null;
+
 	get selectedNodes(): Array<Node>{
-		return GraphSelection.selectedEdgeFromState().neighbouringNodes();
+		return this.selectedEdge ? this.selectedEdge.neighbouringNodes() : [];
+	}
+
+	set selectedEdge(edge: Edge) {
+		this._selectedEdge = edge;
+		this.activeEdges = this._updateActiveEdges();
+	}
+
+	_updateActiveEdges(): Array<Edge>{
+		this.selectionChanged = true;
+		if (!this._selectedEdge) return [];
+		const edges: Array<Edge> = [this._selectedEdge];
+		this.selectedNodes.map(node => edges.push(...node.edges));
+		return edges;
 	}
 }
 

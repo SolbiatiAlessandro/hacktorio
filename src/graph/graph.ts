@@ -14,7 +14,7 @@ import { Event, GraphEvent, Events } from "../events";
 
 
 // @ts-ignore
-export class Graph extends graphology.Graph {
+export class Graph extends graphology.UndirectedGraph {
   private static instance: Graph;
 
   private readonly NODE: string = "_node";
@@ -48,16 +48,36 @@ export class Graph extends graphology.Graph {
     return edge.name;
   }
 
-  allEdges() {
+  get allEdges() {
     return super.mapEdges((_: string, attr: any) => attr[this.EDGE]);
   }
 
-  allNodes() {
+  get allNodes() {
     return super.mapNodes((_: string, attr: any) => attr[this.NODE]);
   }
 
+	nodeNeighbors(node: Node): Array<Node>{
+		return super.mapNeighbors(node.name, (name: string, attr: any) => attr[this.NODE]);
+	}
+
+	edgeFromNodes(firstNode: Node, secondNode: Node): Edge{
+		return super.getEdgeAttribute(firstNode.name, secondNode.name, this.EDGE);
+	}
+
+	updateEdges(edges: Array<Edge>){
+		edges.map((edge: Edge) => edge.update());
+	}
+
+	updateEverything(){
+		this.updateEdges(this.allEdges);
+	}
+
   update() {
-    // later we should update only selected from GraphEvents
-    this.allEdges().map((edge: Edge) => edge.update());
+		if(this.graphSelectionState.selectionChanged){
+			this.updateEverything();
+			this.graphSelectionState.selectionChanged = false;
+		} else {
+			this.updateEdges(this.graphSelectionState.activeEdges);
+		}
   }
 }

@@ -12,9 +12,9 @@ import { GraphSelectionObject } from "../../graph/graphobjects/graph-selection-o
 import { Event, GraphEvent, Events } from "../../events";
 
 export class Node extends GraphSelectionObject {
-	graph: Graph = Graph.getInstance();
 	readonly SELECTION_EVENTS: Array<Event> = 
 		[Events.NODE_SELECTED, Events.NODE_DESELECTED];
+	graph: Graph = Graph.getInstance();
 
   constructor(
     public name: string,
@@ -23,4 +23,11 @@ export class Node extends GraphSelectionObject {
   ) {
     super();
   }
+
+	get edges(){
+		return this.graph.nodeNeighbors(this).map(
+			(neighbour: Node) => 
+			this.graph.edgeFromNodes(this, neighbour)
+		);
+	}
 }

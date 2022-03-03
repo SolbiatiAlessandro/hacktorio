@@ -1,6 +1,5 @@
 import { GraphObject } from "../../graph/graphobjects/graph-object";
 import { GraphSelection } from "../../graph/graph-selection";
-import { Graph } from "../../graph/graph"; 
 
 import { Event, GraphEvent, Events } from "../../events";
 

@@ -8,6 +8,7 @@ import { Events } from "../events";
 
 export class MainScene extends Phaser.Scene {
   graph: Graph = Graph.getInstance();
+	graphSelection: GraphSelection = GraphSelection;
 
   constructor() {
     super({ key: "MainScene" });
@@ -28,7 +29,7 @@ export class MainScene extends Phaser.Scene {
         currentlyOver: Array<Phaser.GameObjects.GameObject>
       ) {
         if (currentlyOver.length == 0) {
-					GraphSelection.emptySelection();
+					this.graphSelection.emptySelection();
         }
       }.bind(this)
     );
