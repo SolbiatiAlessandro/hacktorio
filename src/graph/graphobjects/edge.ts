@@ -8,11 +8,11 @@ import { GraphSelection } from "../../graph/graph-selection";
 
 import { GraphObject } from "../../graph/graphobjects/graph-object";
 import { Node } from "../../graph/graphobjects/node";
-import { GraphSelectionObject } from "../../graph/graphobjects/graph-selection-object";
+import { GraphSelectableObject } from "../../graph/graphobjects/graph-selectable-object";
 
 import { GraphEvent, Event, Events } from "../../events";
 
-export class Edge extends GraphSelectionObject {
+export class Edge extends GraphSelectableObject {
   public name: string;
   readonly SELECTION_EVENTS: Array<Event> = [
     Events.EDGE_DESELECTED,

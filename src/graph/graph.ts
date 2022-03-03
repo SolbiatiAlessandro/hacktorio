@@ -47,16 +47,16 @@ export class Graph extends graphology.Graph {
     return edge.name;
   }
 
-  allEdges() {
+  get allEdges() {
     return super.mapEdges((_: string, attr: any) => attr[this.EDGE]);
   }
 
-  allNodes() {
+  get allNodes() {
     return super.mapNodes((_: string, attr: any) => attr[this.NODE]);
   }
 
   update() {
     // later we should update only selected from GraphEvents
-    this.allEdges().map((edge: Edge) => edge.update());
+    this.allEdges.map((edge: Edge) => edge.update());
   }
 }

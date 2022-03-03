@@ -4,7 +4,7 @@ import { Graph } from "../../graph/graph";
 
 import { Event, GraphEvent, Events } from "../../events";
 
-export abstract class GraphSelectionObject extends GraphObject {
+export abstract class GraphSelectableObject extends GraphObject {
   abstract readonly SELECTION_EVENTS: Array<Event>;
 
   select() {

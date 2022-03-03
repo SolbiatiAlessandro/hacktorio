@@ -56,5 +56,5 @@ export class BaseRailway extends GameObjectWithRailwayTypes {
     this.setDepth(this.depth);
   }
 
-	onEvent(event: Event){}
+  onEvent(event: Event) {}
 }

@@ -7,7 +7,7 @@ import { GameObjectOnGraph } from "../../interfaces/graph.interface";
 
 import { ControllerHandle } from "../../gameobjects/controller/gameobjects/controller-handle";
 import { ControllerLine } from "../../gameobjects/controller/gameobjects/controller-line";
-import { GameObjectWithControllerTypes } from "../../gameobjects/controller/controller-geometries";
+import { GameObjectWithControllerTypes } from "../../gameobjects/controller/controller-types";
 
 export class Controller
   extends GameObjectWithControllerTypes

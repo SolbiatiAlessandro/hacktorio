@@ -1,6 +1,6 @@
 import { Node } from "../graph/graphobjects/node";
 import { Edge } from "../graph/graphobjects/edge";
-import type { GraphSelectionObject } from "../graph/graphobjects/graph-selection-object";
+import type { GraphSelectableObject } from "../graph/graphobjects/graph-selectable-object";
 import { Graph } from "../graph/graph";
 
 import { Event, GraphEvent, Events } from "../events";
@@ -27,18 +27,18 @@ export class GraphSelection {
     to.on(event);
   }
 
-  static deselect(graphSelectionObject: GraphSelectionObject) {
-    if (graphSelectionObject instanceof Node)
-      GraphSelection.deselectNode(graphSelectionObject);
-    if (graphSelectionObject instanceof Edge)
-      GraphSelection.deselectEdge(graphSelectionObject);
+  static deselect(graphSelectableObject: GraphSelectableObject) {
+    if (graphSelectableObject instanceof Node)
+      GraphSelection.deselectNode(graphSelectableObject);
+    if (graphSelectableObject instanceof Edge)
+      GraphSelection.deselectEdge(graphSelectableObject);
   }
 
-  static select(graphSelectionObject: GraphSelectionObject) {
-    if (graphSelectionObject instanceof Node)
-      GraphSelection.selectNode(graphSelectionObject);
-    if (graphSelectionObject instanceof Edge)
-      GraphSelection.selectEdge(graphSelectionObject);
+  static select(graphSelectableObject: GraphSelectableObject) {
+    if (graphSelectableObject instanceof Node)
+      GraphSelection.selectNode(graphSelectableObject);
+    if (graphSelectableObject instanceof Edge)
+      GraphSelection.selectEdge(graphSelectableObject);
   }
 
   static deselectNode(node: Node) {

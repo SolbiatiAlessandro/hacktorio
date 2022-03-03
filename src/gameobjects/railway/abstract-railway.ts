@@ -7,7 +7,7 @@ export abstract class RailwayWithChangingDepth extends BaseRailway {
   abstract readonly depth_when_selected: number;
   depth_when_deseleted: number = this.depth;
 
-	@callAfterSuperCall
+  @callAfterSuperCall
   onEvent(event: Event) {
     if (event == Events.EDGE_SELECTED) {
       this.depth = this.depth_when_selected;
@@ -23,7 +23,7 @@ export abstract class RailwayWithChangingOffsetAndDepth extends RailwayWithChang
   private readonly OFFSET_UP = -10;
   yOffset: number = this.OFFSET_DOWN;
 
-	@callAfterSuperCall
+  @callAfterSuperCall
   onEvent(event: Event) {
     if (event == Events.EDGE_SELECTED) {
       this.yOffset = this.OFFSET_UP;
