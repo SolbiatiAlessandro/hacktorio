@@ -1,6 +1,7 @@
 import { Edge } from "../graph/graphobjects/edge";
 import { Node } from "../graph/graphobjects/node";
 import { Graph } from "../graph/graph";
+import { GeometriesOnGraphObject } from "../graph/graphobjects/graph-object";
 
 import {
   GeometryOnGraph,
@@ -19,6 +20,8 @@ import {
   ShadowRailway,
 } from "../gameobjects/railway/railway";
 
+import { GeometriesForRailway } from "../gameobjects/railway/interfaces/geometries-for-railway.interface"
+
 import { MainScene } from "../scenes/main-scene";
 
 export enum EdgeGeometries {
@@ -32,28 +35,34 @@ export enum EdgeGameObjects {
   RAILWAY__SHADOW,
 }
 
-export class EdgeBuilder {
-  graph: Graph = Graph.getInstance();
-  geometryBuilder: GeometryBuilder = new GeometryBuilder();
-  constructor(public scene: MainScene) {}
-
-  buildGeometries(
-    firstNode: Node,
-    secondNode: Node
-  ): Record<string, GeometryOnGraph> {
-    const geometries: Record<string, GeometryOnGraph> = {};
-    geometries[EdgeGeometries.CURVE__RENDER] = this.geometryBuilder.newCurve(
+class GeometriesOnEdge 
+extends GeometriesOnGraphObject 
+implements GeometriesForRailway{
+	renderCurve: CurveForRender;
+	constructor(geometryBuilder: GeometryBuilder, firstNode: Node, secondNode: Node){
+		super();
+		//@ts-ignore
+    const renderCurve: CurveForRender = geometryBuilder.newCurve(
       CurveTypes.FOR_RENDER,
       firstNode,
       secondNode
     );
-    geometries[EdgeGeometries.CURVE__TEST] = this.geometryBuilder.newCurve(
+		this.renderCurve = renderCurve;
+		this.geometries.push(renderCurve);
+
+    const testCurve = geometryBuilder.newCurve(
       CurveTypes.FOR_TEST,
       firstNode,
       secondNode
     );
-    return geometries;
-  }
+		this.geometries.push(testCurve);
+	}
+}
+
+export class EdgeBuilder {
+  graph: Graph = Graph.getInstance();
+  geometryBuilder: GeometryBuilder = new GeometryBuilder();
+  constructor(public scene: MainScene) {}
 
   buildGameObjects(): Record<string, GameObjectOnGraph> {
     const gameObjects: Record<string, GameObjectOnGraph> = {};
@@ -69,12 +78,10 @@ export class EdgeBuilder {
 
   build(firstNode: Node, secondNode: Node) {
     const gameObjects = this.buildGameObjects();
-    const geometries = this.buildGeometries(firstNode, secondNode);
+    const geometries = new GeometriesOnEdge(this.geometryBuilder, firstNode, secondNode);
     const edge = new Edge(firstNode, secondNode, gameObjects, geometries);
     this.graph.addEdge(edge);
-    Object.entries(geometries).forEach(
-      ([key, geometry]) => (geometry.graphParentElement = edge)
-    );
+		geometries.parentGraphObject = edge;
     Object.entries(gameObjects).forEach(
       ([key, gameObject]) => (gameObject.graphParentElement = edge)
     );

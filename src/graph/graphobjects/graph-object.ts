@@ -1,3 +1,5 @@
+import { Node } from "../../graph/graphobjects/node";
+import { Edge } from "../../graph/graphobjects/edge";
 import { Graph } from "../../graph/graph";
 import {
   GameObjectOnGraph,
@@ -10,6 +12,10 @@ export class GeometriesOnGraphObject{
 
 	update(){
 		this.geometries.forEach(geometry => geometry.update());
+	}
+
+	set parentGraphObject(_parentGraphObject: Node | Edge){
+		this.geometries.forEach(geometry => geometry.graphParentElement = _parentGraphObject);
 	}
 }
 

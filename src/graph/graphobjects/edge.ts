@@ -6,7 +6,7 @@ import {
 import { Graph } from "../../graph/graph";
 import { GraphSelection } from "../../graph/graph-selection";
 
-import { GraphObject } from "../../graph/graphobjects/graph-object";
+import { GraphObject, GeometriesOnGraphObject } from "../../graph/graphobjects/graph-object";
 import { Node } from "../../graph/graphobjects/node";
 import { GraphSelectableObject } from "../../graph/graphobjects/graph-selectable-object";
 
@@ -24,7 +24,7 @@ export class Edge extends GraphSelectableObject {
     public firstNode: Node,
     public secondNode: Node,
     public gameObjects: Record<string, GameObjectOnGraph>,
-    public geometries: Record<string, GeometryOnGraph>
+    public geometries: GeometriesOnGraphObject,
   ) {
     super();
     this.name = firstNode.name + "-" + secondNode.name;
