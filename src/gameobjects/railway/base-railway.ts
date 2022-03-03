@@ -7,6 +7,8 @@ import { Constants } from "../../constants";
 import { GameObject } from "../../gameobjects/gameobject";
 import { RailwayImage } from "../../gameobjects/railway/gameobjects/railway-image";
 
+import { Event } from "../../events";
+
 // set the correct types of object from other domains
 // TODO: think how to get rid of this class and ts-ignores
 class GameObjectWithRailwayTypes extends GameObject {
@@ -53,4 +55,6 @@ export class BaseRailway extends GameObjectWithRailwayTypes {
     });
     this.setDepth(this.depth);
   }
+
+	onEvent(event: Event){}
 }
