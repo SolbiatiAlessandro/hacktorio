@@ -15,4 +15,13 @@ export abstract class GraphObject {
       gameObject.onEvent(event)
     );
   }
+
+  update() {
+    Object.entries(this.gameObjects).forEach(([_, gameObject]) =>
+      gameObject.update()
+    );
+    Object.entries(this.geometries).forEach(([_, geometry]) =>
+      geometry.update()
+    );
+  }
 }

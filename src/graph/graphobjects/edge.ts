@@ -48,12 +48,4 @@ export class Edge extends GraphSelectableObject {
     );
   }
 
-  update() {
-    Object.entries(this.gameObjects).forEach(([_, gameObject]) =>
-      gameObject.update()
-    );
-    Object.entries(this.geometries).forEach(([_, geometry]) =>
-      geometry.update()
-    );
-  }
 }
