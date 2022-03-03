@@ -9,9 +9,7 @@ import { Rail } from "../../gameobjects/railway/rail";
 
 // set the correct types of object from other domains
 // TODO: think how to get rid of this class and ts-ignores
-class GameObjectWithRailwayTypes
-  extends GameObject
-{
+class GameObjectWithRailwayTypes extends GameObject {
   get curve(): CurveForRender {
     // @ts-ignore
     return this.graphParentElement.geometries[EdgeGeometries.CURVE__RENDER];
@@ -23,9 +21,7 @@ class GameObjectWithRailwayTypes
   }
 }
 
-export class AbstractRailway
-  extends GameObjectWithRailwayTypes
-{
+export class AbstractRailway extends GameObjectWithRailwayTypes {
   image: string = "no-image";
   tint: number = Constants.PRIMARY_COLOR;
   depth: number = 0;

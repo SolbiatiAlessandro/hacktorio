@@ -191,6 +191,7 @@ prettier --write .
 ```
 
 Some useful bash commands
+
 ```
 rg "\{ Edge \}" -l | xargs sed -i '' 's/graph\/edge/graph\/graphobjects\/edge/g'
 ```

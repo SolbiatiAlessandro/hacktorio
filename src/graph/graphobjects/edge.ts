@@ -14,9 +14,11 @@ import { GraphEvent, Event, Events } from "../../events";
 
 export class Edge extends GraphSelectionObject {
   public name: string;
-	readonly SELECTION_EVENTS: Array<Event> = 
-		[Events.EDGE_DESELECTED, Events.EDGE_SELECTED];
-	graph: Graph = Graph.getInstance();
+  readonly SELECTION_EVENTS: Array<Event> = [
+    Events.EDGE_DESELECTED,
+    Events.EDGE_SELECTED,
+  ];
+  graph: Graph = Graph.getInstance();
 
   constructor(
     public firstNode: Node,
@@ -28,20 +30,22 @@ export class Edge extends GraphSelectionObject {
     this.name = firstNode.name + "-" + secondNode.name;
   }
 
-	neighbouringNodes(): [Node, Node]{
-		return [this.firstNode, this.secondNode];
-	}
+  neighbouringNodes(): [Node, Node] {
+    return [this.firstNode, this.secondNode];
+  }
 
-	selectNeighbourNodes(){
-		this.neighbouringNodes().map((node: Node) => node.select());
-	}
+  selectNeighbourNodes() {
+    this.neighbouringNodes().map((node: Node) => node.select());
+  }
 
-	deselectNeighbourNodes(){
-		this.neighbouringNodes().map((node: Node) => node.deselect());
-	}
+  deselectNeighbourNodes() {
+    this.neighbouringNodes().map((node: Node) => node.deselect());
+  }
 
   broadcastToNeighbourNodes(event: Event) {
-		this.neighbouringNodes().map((node: Node) => node.broadcastToGameObjects(event));
+    this.neighbouringNodes().map((node: Node) =>
+      node.broadcastToGameObjects(event)
+    );
   }
 
   update() {

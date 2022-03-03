@@ -1,6 +1,6 @@
 import { Node } from "../graph/graphobjects/node";
 import { Edge } from "../graph/graphobjects/edge";
-import { Event }  from "../events";
+import { Event } from "../events";
 
 export interface GameObjectOnGraph {
   graphParentElement: Node | Edge;

@@ -28,7 +28,7 @@ export class MainScene extends Phaser.Scene {
         currentlyOver: Array<Phaser.GameObjects.GameObject>
       ) {
         if (currentlyOver.length == 0) {
-					GraphSelection.emptySelection();
+          GraphSelection.emptySelection();
         }
       }.bind(this)
     );

@@ -23,7 +23,7 @@ export class Controller
   depth: number = 5;
   imageOffsetY: number = -20;
 
-	pointerdown(){}
+  pointerdown() {}
 
   populateHandles() {
     this.rightHandle = new Handle(
@@ -32,7 +32,7 @@ export class Controller
       this.pointRightRender,
       this.onDrag("rightHandle", "leftHandle"),
       this.imageOffsetY,
-			this.pointerdown.bind(this),
+      this.pointerdown.bind(this)
     );
     this.add(this.rightHandle, true);
     this.leftHandle = new Handle(
@@ -41,7 +41,7 @@ export class Controller
       this.pointLeftRender,
       this.onDrag("leftHandle", "rightHandle"),
       this.imageOffsetY,
-			this.pointerdown.bind(this),
+      this.pointerdown.bind(this)
     );
     this.add(this.leftHandle, true);
   }

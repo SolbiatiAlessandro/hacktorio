@@ -12,7 +12,6 @@ import {
 
 import { Event, GraphEvent, Events } from "../events";
 
-
 // @ts-ignore
 export class Graph extends graphology.Graph {
   private static instance: Graph;
@@ -20,7 +19,7 @@ export class Graph extends graphology.Graph {
   private readonly NODE: string = "_node";
   private readonly EDGE: string = "_edge";
 
-	public graphSelectionState = new GraphSelectionState();
+  public graphSelectionState = new GraphSelectionState();
 
   public static getInstance(): Graph {
     if (!Graph.instance) {

@@ -4,9 +4,7 @@ import { Event, Events } from "../../events";
 import { Constants } from "../../constants";
 import { GameObjectOnGraph } from "../../interfaces/graph.interface";
 
-class RenderedRailway 
-extends AbstractRailway 
-{
+class RenderedRailway extends AbstractRailway {
   private readonly OFFSET_DOWN = -2;
   private readonly OFFSET_UP = -10;
   yOffset: number = this.OFFSET_DOWN;
@@ -21,16 +19,12 @@ extends AbstractRailway
   }
 }
 
-export 
-class TopRailway 
-extends RenderedRailway 
-implements GameObjectOnGraph
-{
+export class TopRailway extends RenderedRailway implements GameObjectOnGraph {
   image: string = "rail-top";
   depth: number = 2;
 
   onEvent(event: Event) {
-		super.onEvent(event);
+    super.onEvent(event);
     if (event.name == Events.EDGE_SELECTED.name) {
       this.depth = 4;
     }
@@ -40,17 +34,16 @@ implements GameObjectOnGraph
   }
 }
 
-export 
-class BottomRailway 
-extends RenderedRailway 
-implements GameObjectOnGraph
+export class BottomRailway
+  extends RenderedRailway
+  implements GameObjectOnGraph
 {
   image: string = "rail-bottom";
   depth: number = 1;
   tint: number = Constants.randomColor();
 
   onEvent(event: Event) {
-		super.onEvent(event);
+    super.onEvent(event);
     if (event == Events.EDGE_SELECTED) {
       this.depth = 3;
     }
@@ -60,10 +53,9 @@ implements GameObjectOnGraph
   }
 }
 
-export 
-class ShadowRailway 
-extends AbstractRailway 
-implements GameObjectOnGraph
+export class ShadowRailway
+  extends AbstractRailway
+  implements GameObjectOnGraph
 {
   image: string = "rail-bottom";
   depth: number = 0;
