@@ -14,7 +14,8 @@
   },
   "dependencies": {
     "graphology": "^0.24.0",
-    "phaser": "3.55.2"
+    "phaser": "3.55.2",
+    "tplant": "^3.1.0"
   },
   "scripts": {
     "dev": "./node_modules/webpack-cli/bin/cli.js --mode development && webpack serve --mode development"

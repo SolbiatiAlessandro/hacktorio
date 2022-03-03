@@ -182,16 +182,19 @@ yarn dev
 
 Stretch: listen to bach while coding
 
-Protip: use empty github comments to keep track of new features
-
 ```
+// git
 git commit --allow-empty  (feature ideas descriptions)
 git log --graph --decorate --oneline --all
-prettier --write .
-```
 
-Some useful bash commands
 
-```
+// code format
+npx prettier --write .
+
+// docs
+npx tplant -i src/game.ts -o ./imgs/architecture.svg && open ./imags/architecture.svg
+
+// refactoring
 rg "\{ Edge \}" -l | xargs sed -i '' 's/graph\/edge/graph\/graphobjects\/edge/g'
+rg "AbstractRailway" -l | xargs sed -i '' 's/AbstractRailway/BaseRailway/g'
 ```

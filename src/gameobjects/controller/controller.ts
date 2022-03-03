@@ -5,8 +5,8 @@ import { Point } from "../../geometry/point";
 
 import { GameObjectOnGraph } from "../../interfaces/graph.interface";
 
-import { Handle } from "../../gameobjects/controller/handle";
-import { Line } from "../../gameobjects/controller/line";
+import { ControllerHandle } from "../../gameobjects/controller/controller-handle";
+import { ControllerLine } from "../../gameobjects/controller/controller-line";
 import { GameObjectWithControllerTypes } from "../../gameobjects/controller/controller-geometries";
 
 export class Controller
@@ -14,9 +14,9 @@ export class Controller
   implements GameObjectOnGraph
 {
   controllerCenter: Phaser.GameObjects.Sprite;
-  rightHandle: Handle;
-  leftHandle: Handle;
-  line: Line;
+  rightControllerHandle: ControllerHandle;
+  leftControllerHandle: ControllerHandle;
+  line: ControllerLine;
 
   valid: boolean = true;
 
@@ -25,30 +25,34 @@ export class Controller
 
   pointerdown() {}
 
-  populateHandles() {
-    this.rightHandle = new Handle(
+  populateControllerHandles() {
+    this.rightControllerHandle = new ControllerHandle(
       this.scene,
       this.pointRightTest,
       this.pointRightRender,
-      this.onDrag("rightHandle", "leftHandle"),
+      this.onDrag("rightControllerHandle", "leftControllerHandle"),
       this.imageOffsetY,
       this.pointerdown.bind(this)
     );
-    this.add(this.rightHandle, true);
-    this.leftHandle = new Handle(
+    this.add(this.rightControllerHandle, true);
+    this.leftControllerHandle = new ControllerHandle(
       this.scene,
       this.pointLeftTest,
       this.pointLeftRender,
-      this.onDrag("leftHandle", "rightHandle"),
+      this.onDrag("leftControllerHandle", "rightControllerHandle"),
       this.imageOffsetY,
       this.pointerdown.bind(this)
     );
-    this.add(this.leftHandle, true);
+    this.add(this.leftControllerHandle, true);
   }
 
   populate() {
-    this.populateHandles();
-    this.line = new Line(this.scene, this.leftHandle, this.rightHandle);
+    this.populateControllerHandles();
+    this.line = new ControllerLine(
+      this.scene,
+      this.leftControllerHandle,
+      this.rightControllerHandle
+    );
     this.add(this.line, true);
     this.controllerCenter = this.create(
       this.pointCenter.x,
@@ -60,19 +64,22 @@ export class Controller
   }
 
   onDrag(
-    handle: "rightHandle" | "leftHandle",
-    otherHandle: "rightHandle" | "leftHandle"
+    handle: "rightControllerHandle" | "leftControllerHandle",
+    otherControllerHandle: "rightControllerHandle" | "leftControllerHandle"
   ): (x: number, y: number) => void {
     return function (x: number, y: number) {
       this[handle].move(x, y, this.valid);
-      this[otherHandle].move(...this.pointCenter.reflectBy(x, y), this.valid);
-      this.line.move(this[handle], this[otherHandle]);
+      this[otherControllerHandle].move(
+        ...this.pointCenter.reflectBy(x, y),
+        this.valid
+      );
+      this.line.move(this[handle], this[otherControllerHandle]);
     }.bind(this);
   }
 
   _setTint(color: number) {
-    this.rightHandle.setTint(color);
-    this.leftHandle.setTint(color);
+    this.rightControllerHandle.setTint(color);
+    this.leftControllerHandle.setTint(color);
     this.line.setTint(color);
   }
 
