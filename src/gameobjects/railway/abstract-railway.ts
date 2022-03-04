@@ -5,7 +5,7 @@ import { callAfterSuperCall } from "../../decorators";
 
 export abstract class RailwayWithChangingDepth extends BaseRailway {
   abstract readonly depth_when_selected: number;
-  depth_when_deseleted: number = this.depth;
+  depth_when_deselected: number = this.depth;
 
   @callAfterSuperCall
   onEvent(event: Event) {
@@ -13,7 +13,7 @@ export abstract class RailwayWithChangingDepth extends BaseRailway {
       this.depth = this.depth_when_selected;
     }
     if (event == Events.EDGE_DESELECTED) {
-      this.depth = this.depth_when_deseleted;
+      this.depth = this.depth_when_deselected;
     }
   }
 }
